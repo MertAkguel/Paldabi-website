@@ -1,0 +1,29 @@
+#matrix {
+    display: grid;
+    grid-template-columns: repeat(1, 20px);
+    grid-template-rows: repeat(1, 20px);
+    grid-gap: 0px;
+    background: #efefef;
+    justify-content:center;
+    align-content:end;
+    
+
+ }
+ 
+
+.cell {
+    /* center the cell content */
+justify-content: center;
+align-items: center;
+display: flex;
+font-family: Arial;
+font-size: 2rem;
+font-weight: bold;
+background: white;
+border: 1px solid;
+}
+.cell:hover
+{
+  background-color: rgb(230, 230, 230);
+  color: black;
+}

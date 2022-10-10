@@ -1,0 +1,35 @@
+
+<div class="bg-success p-2 text-dark bg-opacity-25">
+  
+    <div class="row">
+      <div class="col">
+        <input type="text" class="form-control" id="horizontal" placeholder="Sequenz1" aria-label="Sequenz1"
+        value="ACTG">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" id="vertical" placeholder="Sequenz2" aria-label="Sequenz2"
+        value="ACTG">
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <input type="number" class="form-control" id="match" placeholder="Matchscore" aria-label="Matchscore">
+      </div>
+      <div class="col">
+        <input type="number" class="form-control" id="mismatch" placeholder="Mismatchscore" aria-label="Mismatchscore">
+      </div>
+      <div class="col">
+        <input type="number" class="form-control" id="gap" placeholder="Gap" aria-label="Gap">
+      </div>
+    </div>
+    <button onclick="setmatrix()">vorübergehend</button>
+  </div>
+  <br>
+
+  
+  <div class="tic-tac-toe" id="matrix">
+    
+  </div>
+  
+<script src="{{url_for('static', filename='js/nlw.js')}}"></script>
