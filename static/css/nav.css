@@ -1,9 +1,27 @@
+
+#form
+{
+  background-color: rgba(25, 135, 84, 0.25);
+}
+
+#confirm-button
+{
+  position: relative;
+  left: 45%;
+}
+
+#confirm-button:hover
+{
+  background-color: rgb(230, 230, 230);
+  color: black;
+}
+
 #matrix {
     display: grid;
-    grid-template-columns: repeat(1, 20px);
-    grid-template-rows: repeat(1, 20px);
+    grid-template-columns: repeat(1, 10px);
+    grid-template-rows: repeat(1, 10px);
     grid-gap: 0px;
-    background: #efefef;
+    
     justify-content:center;
     align-content:end;
     
@@ -17,7 +35,7 @@ justify-content: center;
 align-items: center;
 display: flex;
 font-family: Arial;
-font-size: 2rem;
+font-size: 1rem;
 font-weight: bold;
 background: white;
 border: 1px solid;
@@ -27,3 +45,4 @@ border: 1px solid;
   background-color: rgb(230, 230, 230);
   color: black;
 }
+
