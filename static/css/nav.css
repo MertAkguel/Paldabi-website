@@ -18,8 +18,8 @@
 
 #matrix {
     display: grid;
-    grid-template-columns: repeat(1, 10px);
-    grid-template-rows: repeat(1, 10px);
+    grid-template-columns: repeat(1, 1px);
+    grid-template-rows: repeat(1, 1px);
     grid-gap: 0px;
     
     justify-content:center;
@@ -46,3 +46,42 @@ border: 1px solid;
   color: black;
 }
 
+#alignment
+{
+    color: black;
+    
+    
+    
+    font-size: 100%;
+    
+    text-align: center;
+    
+} 
+
+
+.wrap-flex { display: flex;
+  font-family: Arial;
+  font-size: 1rem;
+  font-weight: bold; }
+
+.wrap-flex > * {
+  width: 70%;
+  float: left;
+  
+  
+}
+.left-column
+{
+  float: left;
+  width: 60%;
+}
+.right-column 
+{
+  float: right;
+  width: 80%;
+}
+
+#sequence
+{
+  /* text-align: center; */
+}

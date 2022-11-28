@@ -99,7 +99,7 @@ function initializeNW(traceback)
     const matrix = document.getElementsByClassName('cell');
     const sequence1 = document.getElementById('horizontal').value;
     const sequence2 = document.getElementById('vertical').value; 
-    const gapscore = document.getElementById('gap').value;
+    
     let counter_h = 1;
     let counter_v = 1;
     const lenh = sequence1.length + 1;
@@ -110,15 +110,15 @@ function initializeNW(traceback)
     for (let i = lenh + 3; i < lenh * 2 + 2; i++)
     {
         
-        traceback[0][counter_h] = 'H';
-        matrix[i].innerHTML = (counter_h) * parseInt(gapscore);
+        traceback[0][counter_h] = 'N';
+        matrix[i].innerHTML = 0;
         counter_h++;
     }
     for (let i = 2 * lenh + 3; i <= (lenh + 1) * (lenv + 1); i += lenh + 1)
     {
         
-        traceback[counter_v][0] = 'V';
-        matrix[i].innerHTML = (counter_v) * parseInt(gapscore);
+        traceback[counter_v][0] = 'N';
+        matrix[i].innerHTML = 0 ;
         counter_v++;
     }
     traceback[0][0] = 'N';
@@ -144,48 +144,56 @@ function buildNW(traceback)
     for (let i = start; i < end; i += lenh + 2)
     {
         
-        for (let j = 0; j < lenh; j++)
+        for (let j = 0; j < lenh; ++j)
         {
             
             if (horizontal[counter_h - 1] === vertikal[counter_v - 1])
             {
                 
-                if (parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
+                if (parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) > 0)
                 {
                     
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match);
                     traceback[counter_v][counter_h] = 'D';
                 }
-                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) && parseInt(matrix[i-lenh-2+j].innerHTML) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
+                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) && parseInt(matrix[i-lenh-2+j].innerHTML) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > 0)
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap);
                     traceback[counter_v][counter_h] = 'V';
                 }
-                else if (parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap))
+                else if (parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > 0)
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-1+j].innerHTML) + parseInt(gap);
                     traceback[counter_v][counter_h] = 'H';
+                }
+                else
+                {
+                    matrix[i+j].innerHTML = 0;
                 }
                
             }
             else
             {
                 
-                if (parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
+                if (parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) > 0)
                 {
                     
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch);
                     traceback[counter_v][counter_h] = 'D';
                 }
-                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) && parseInt(matrix[i-lenh-2+j].innerHTML) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
+                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) && parseInt(matrix[i-lenh-2+j].innerHTML) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > 0)
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap);
                     traceback[counter_v][counter_h] = 'V';
                 }
-                else if (parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap))
+                else if (parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > 0)
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-1+j].innerHTML) + parseInt(gap);
                     traceback[counter_v][counter_h] = 'H';
+                }
+                else
+                {
+                    matrix[i+j].innerHTML = 0;
                 }
                
             }
@@ -197,13 +205,34 @@ function buildNW(traceback)
     }
     
 }
+var max_element_positions = [0, 0]; // horizontal, vertikal
+var max_position = 0;
 function getscore()
 {
+
     const score = document.getElementById('score');
     const cell = document.getElementsByClassName('cell');
+    const horizontal = document.getElementById('horizontal').value;
+    //const vertikal = document.getElementById('vertical').value;
+    var max_element = 0;
     
-    
-    score.innerText = "Score: " + cell[cell.length - 1].innerHTML;
+    //const product = (horizontal.length + 2) * (vertikal.length + 2);
+    for(let i = 0; i < cell.length; ++i)
+    {
+        if(parseInt(cell[i].innerHTML) > max_element)
+        {
+            max_element = parseInt(cell[i].innerHTML);
+            max_element_positions[0] = parseInt(cell[i].innerHTML) % (horizontal.length + 2);
+            max_position = i;
+        }
+        max_element_positions[0] = max_position % (horizontal.length + 2) - 1;
+        max_element_positions[1] = parseInt(max_position / (horizontal.length + 2)) - 1;
+        
+    }
+    // console.log("horizontal", "vertikal")
+    // console.log(max_element_positions);
+    // console.log(max_position);
+    score.innerText = "Score: " + max_element;
     
 
 }
@@ -223,7 +252,7 @@ function delete_matrix()
 {
     let cell = document.getElementsByClassName('cell');
     let iteration_laenge = cell.length - 1;
-    var c = 0;
+    let c = 0;
     for(let i = iteration_laenge; i >= 0; i--)
     {
         c++;
@@ -245,11 +274,8 @@ function getMatrix()
 
 function get_Alignment(a1="", a2="",gaps="")
 {
-    var cell = document.getElementsByClassName('cell');
-
-
+    const cell = document.getElementsByClassName('cell');
     var alignment = document.getElementById('alignment');
-    console.log(alignment.innerText);
 	if(alignment.innerText != "")
     {
         alignment.innerText = "";
@@ -258,19 +284,18 @@ function get_Alignment(a1="", a2="",gaps="")
 	
 	var vertikal = document.getElementById('vertical').value;
 
-    var cell_number = (horizontal.length + 2) * (vertikal.length + 2) - 1;
+    var cell_number = max_position;
     cell[cell_number].style.backgroundColor = "#198754";
     cell[cell_number].style.fontSize = "1.1rem";
 
-	let tupel = [vertikal.length, horizontal.length];
+	let tupel = [max_element_positions[1], max_element_positions[0]];
 
-	while(tupel[0] != 0 || tupel[1] != 0)
+	while(traceback[tupel[0]][tupel[1]] != 'N')
 	{
         
 		if(traceback[tupel[0]][tupel[1]] === 'D')
 		{
             cell_number -= (horizontal.length + 3);
-            
 
 			a2 += horizontal[tupel[1]-1];
 			a1 += vertikal[tupel[0]-1];
@@ -296,7 +321,7 @@ function get_Alignment(a1="", a2="",gaps="")
 		}
 		else
 		{
-            cell_number -= (horizontal.length + 2);
+            cell_number -= (vertikal.length + 2);
 
 			a2 += "-";
 			a1 += vertikal[tupel[0]-1];
@@ -304,6 +329,8 @@ function get_Alignment(a1="", a2="",gaps="")
 
 			tupel[0] -= 1;
 		}
+        console.log(tupel);
+        // console.log("cell_number = ", cell_number)
         cell[cell_number].style.backgroundColor = "#198754";
         cell[cell_number].style.fontSize = "1.1rem";
     }
@@ -314,7 +341,7 @@ function get_Alignment(a1="", a2="",gaps="")
 	
 
     
-    
+    wrap = document.getElementById('wrap');
     alignment.innerText += "\n";
     alignment.innerText += "Alignment \n";
 	alignment.innerText += a1 + "\n";
@@ -323,7 +350,7 @@ function get_Alignment(a1="", a2="",gaps="")
     
 	alignment.innerText += a2 + "\n";
     
-    //alignment.style.pos
+    alignment.style.pos
     
 	
 }

@@ -27,8 +27,28 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/home">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Needleman-Wunsch">Needleman-Wunsch</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="/Suffix-Array" aria-expanded="false">
+              Suffix-Array
+            </a>
+            
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="/Nussinov" aria-expanded="false">
+              Nussinov
+            </a>
+            
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Alignment
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/Needleman-Wunsch">Needleman-Wunsch</a></li>
+              <li><a class="dropdown-item" href="/Smith-Waterman">Smith-Waterman</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,6 +78,18 @@
 {% elif tag == "Needleman-Wunsch" %}
 
   {% include 'Needleman-Wunsch.html' %}
+
+{% elif tag == "Smith-Waterman" %}
+
+  {% include 'Smith-Waterman.html' %}
+
+{% elif tag == "Nussinov" %}
+
+  {% include 'Nussinov.html' %}
+
+{% elif tag == "Suffix-Array" %}
+
+  {% include 'Suffixarray.html' %}
 
   {% endif %}
 
