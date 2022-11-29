@@ -140,8 +140,9 @@ function traceback()
     cell_number = L * 2 + 1;
     cell[cell_number].style.backgroundColor = "#198754";
     cell[cell_number].style.fontSize = "1.1rem";
-  
-    // while()
+    console.log(parseInt(cell_number / (L + 1)));
+    console.log(cell_number % (L + 1) - 1);
+    //while(parseInt(cell_number / (L + 1)) < cell_number % (L + 1) - 1)
     {
         if(parseInt(cell[cell_number].innerHTML) == parseInt(cell[cell_number + L + 1].innerHTML))
         {
@@ -157,6 +158,8 @@ function traceback()
         }
         cell[cell_number].style.backgroundColor = "#198754";
         cell[cell_number].style.fontSize = "1.1rem";
+        console.log(parseInt(cell_number / (L + 1)));
+        console.log(cell_number % (L + 1) - 1);
     }
         
 
