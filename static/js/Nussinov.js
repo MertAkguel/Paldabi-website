@@ -5,7 +5,10 @@ function buildMatrix()
 {
     
     const sequence = document.getElementById('sequence').value;
-    
+    if(document.getElementById('rna') != "")
+    {
+        delete_matrix();
+    }
 
     if(sequence.length === 0)
     {
@@ -123,6 +126,7 @@ function buildNussinov()
             //console.log(case1, case2, case3, case4);
             
             cell[j].innerHTML = Math.max(case1, case2, case3, case4);
+            cell[j].style.backgroundColor = "red";
             
             ++x;
             
@@ -131,39 +135,104 @@ function buildNussinov()
     }
 }
 
-function traceback()
+function traceback(cell_number, rna_structure)
 {
     const cell = document.getElementsByClassName('cell');
     const sequence = document.getElementById('sequence').value;
+    const L = sequence.length;
+
+    let start = L + 3;
     
-    let L = sequence.length;
-    cell_number = L * 2 + 1;
-    cell[cell_number].style.backgroundColor = "#198754";
-    cell[cell_number].style.fontSize = "1.1rem";
-    console.log(parseInt(cell_number / (L + 1)));
-    console.log(cell_number % (L + 1) - 1);
-    //while(parseInt(cell_number / (L + 1)) < cell_number % (L + 1) - 1)
+    var x = parseInt(cell_number / (L + 1));
+
+    const rna = document.getElementById('rna');
+
+    if(rna.innerText != "")
     {
+        rna.innerText = "";
+    }
+
+    if(parseInt(cell_number / (L + 1) - 1) <= cell_number % (L + 1) - 1)
+    {
+        
         if(parseInt(cell[cell_number].innerHTML) == parseInt(cell[cell_number + L + 1].innerHTML))
         {
-            cell_number += L + 1; 
+            rna_structure[parseInt(cell_number / (L + 1) - 1)] = ".";
+            cell_number += L + 1;
+            cell[cell_number].style.backgroundColor = "#198754";
+            cell[cell_number].style.fontSize = "1.1rem";
+            
+            
+            traceback(cell_number, rna_structure)
         }
         else if(parseInt(cell[cell_number].innerHTML) == parseInt(cell[cell_number - 1].innerHTML))
         {
+            rna_structure[cell_number % (L + 1) - 1] = ".";
             cell_number -= 1;
+            cell[cell_number].style.backgroundColor = "#198754";
+            cell[cell_number].style.fontSize = "1.1rem";
+            
+            
+            
+            traceback(cell_number, rna_structure)
         }
-        else if(parseInt(cell[cell_number].innerHTML) == parseInt(cell[cell_number + L].innerHTML) + delta(sequence[parseInt(cell_number / (L + 1))], sequence[cell_number % (L + 1) - 1]))
-        {
-            cell_number += L;
-        }
-        cell[cell_number].style.backgroundColor = "#198754";
-        cell[cell_number].style.fontSize = "1.1rem";
-        console.log(parseInt(cell_number / (L + 1)));
-        console.log(cell_number % (L + 1) - 1);
-    }
         
-
+        else if(parseInt(cell[cell_number].innerHTML) == parseInt(cell[cell_number + L].innerHTML) + delta(sequence[parseInt(cell_number / (L + 1)) - 1], sequence[cell_number % (L + 1) - 1]))
+        {
+            rna_structure[parseInt(cell_number / (L + 1) - 1)] = "(";
+            rna_structure[cell_number % (L + 1) - 1] = ")";
+            cell_number += L;
+            cell[cell_number].style.backgroundColor = "#198754";
+            cell[cell_number].style.fontSize = "1.1rem";
+            
+            
+            
+            traceback(cell_number, rna_structure)
+        }
+        
+        else
+        {
+            
+            var x = parseInt(cell_number / (L + 1));
+            let p = cell_number + (L + 1) * 2;
+            
+            for(let k = start + (L + 2) * (x - 1); k < cell_number; ++k)
+            {
+                console.log("k = ", k);
+                if(parseInt(cell[cell_number].innerHTML) == parseInt(cell[p].innerHTML) + parseInt(cell[k].innerHTML))
+                {   
+                    console.log("k = ", k);
+                    cell[p].style.backgroundColor = "#198754";
+                    cell[p].style.fontSize = "1.1rem";
+                    cell[k].style.backgroundColor = "#198754";
+                    cell[k].style.fontSize = "1.1rem";
+                    
+                    traceback(p, rna_structure);
+                    traceback(k, rna_structure);
+                    
+                }
+                p += (L + 1);
+            }
+        }  
+    }
+    
+    cell[L * 2 + 1].style.backgroundColor = "#198754";
+    cell[L * 2 + 1].style.fontSize = "1.1rem";
 }
+
+function delete_matrix()
+{
+    let cell = document.getElementsByClassName('cell');
+    let iteration_laenge = cell.length - 1;
+   
+    for(let i = iteration_laenge; i >= 0; i--)
+    {
+        
+        cell[i].remove();
+    }
+    
+}
+
 
 
 function getMatrix()
@@ -172,6 +241,19 @@ function getMatrix()
     buildMatrix();
     setMatrix();
     buildNussinov();
-    traceback();
+
+    const sequence = document.getElementById('sequence').value;
+    const L = sequence.length;
+    cell_number = L * 2 + 1;
+    rna_structure = Array(L);
+    traceback(cell_number, rna_structure);
+    rna.innerHTML += "RNA-Struktur = ";
+    console.log(rna_structure);
+    for(let i = 0; i < rna_structure.length; ++i)
+    {
+        rna.innerHTML += rna_structure[i];
+    }
+    
+
 }
 
