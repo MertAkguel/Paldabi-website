@@ -1,0 +1,36 @@
+<br>
+<div class="files_upload">
+    Upload your profiles here:
+    <br>
+    <br>
+    <input type="file"  id="profile_file" name="profile_file">
+    <br>
+
+    <textarea id="output_profile" name="output_profile" rows="4" cols="50"></textarea>
+
+
+
+    <br>
+    <br>
+    <br>
+
+    Upload your sequences here:
+    <br>
+    <br>
+    <input type="file"  id="sequences_file" name="sequences_file">
+    <br>
+
+    <textarea id="output_sequences" name="output_sequences" rows="4" cols="50"></textarea>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-success d-grid gap-2 d-md-block" id="confirm-button"
+        onclick="runMeMe()">Bestätigen</button>
+</div>
+
+
+
+
+
+
+
+<script src="{{url_for('static', filename='js/MeMe.js')}}"></script>

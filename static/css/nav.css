@@ -81,7 +81,21 @@ border: 1px solid;
   width: 80%;
 }
 
-#sequence
+.left-column-nussinov
 {
-  /* text-align: center; */
+  float: left;
+  width: 64%;
+}
+
+#rna
+{
+  color: black;  
+  font-size: 100%;
+  text-align: center;
+}
+
+.files_upload
+{
+  float: left;
+  width: 64%;
 }
