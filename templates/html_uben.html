@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="de-de">
+    <head>
+        <meta name = "keywords" content= "HTML, Form">
+        <meta name = "description" content="Viele geile DNAs">
+        <meta charset="UTF-8">
+        <meta name = "author" content="Ich">
+        <meta http-equiv="refresh" content="300">
+        <!--alle 300 Sekunden wird die Seite neu geladen-->
+        <meta name="robot" content="index, follow">
+        <!-- für große Webseiten angeben und zum
+        Verständnis: Wikipedia Bsp-->
+        <meta name="revisit-after" content="5 month">
+        <!-- Tag wird alle 5 Monate indexieren-->
+        <title>WebsiteName</title>
+    </head>
+    <body>
+        <h1>Überschrift in riesig</h1>
+        <h2>Überschrift in groß</h2>
+        <h3>Überschrift in eher groß</h3>
+        <h4>Überschrift in eher klein</h4>
+        <h5>Überschrift in klein</h5>
+        <h6>Überschrift in mini</h6>
+        <hr> 
+        <p>Ein Paragraph <br> Hallo welt</p>
+        <p title = "Text von Mert"> Ich programiere das erste mal in HTML</p>
+        <a href="https://www.pokewiki.de/Hauptseite">Pokewiki</a>
+        <br>
+        <img src = "Bild1.png" alt ="aktiviere Bildfunktion" width = "200" height = "100">
+        <hr>
+        <p>
+            <b>
+                Irgendwas ist fett
+            </b>
+            <br>
+            <strong>
+                Irgendwas ist fett
+            </strong>
+            <br>
+            <i>
+                Irgendwas ist kursiv
+            </i>
+            <br>
+            <em>
+                Irgendwas ist kursiv
+            </em>
+            <br>
+            <small>
+                Irgendwas ist kleiner
+            </small>
+            <br>
+            <mark>
+                Irgendwas ist markiert</mark>
+            leerzeichen
+            <br>
+            <del>
+                Irgendwas ist durchgestrichen
+            </del>
+            <ins>
+                Irgendwas ist unterstrichen
+            </ins>
+            <br>
+            Irgendwas
+            <sub>
+                Irgendwas wird tiefer gesetzt
+            </sub>
+            <br>
+            Irgendwas
+            <sup>
+                Irgendwas ist höher gesetzt
+            </sup>
+            <br>
+            <q>
+                Irgendwas in Zitatform
+            </q>
+            <blockquote cite="Universität Harward">
+                Irgendwas ist eingerückt
+
+            </blockquote>
+            <code>
+               let x = y;
+               kann Sachen highlighten,
+               muss aber eingestellt werden
+            </code>
+            <!--
+                Hallo ich werde nicht angezeigt
+            -->
+        </p>
+        <hr>
+        <!-- Tabelle wird erstellt-->
+        <table border="20" style="width:100%">
+            <tr> <!-- 1. Zeile-->
+                <td>
+                    <b>1. Spalte</b>
+                   
+                </td>
+                <td>
+                    2. Spalte
+                </td>
+                <td>
+                    3. Spalte
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>2. Zeile</b>
+                </td>
+                <td>
+                    2. Zeile
+                </td>
+                <td>
+                    2. Zeile
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>3. Zeile</b>
+                </td>
+                <td>
+                    3. Zeile
+                </td>
+                <td>
+                    3. Zeile
+                </td>
+            </tr>
+        </table>
+
+        <ul> <!--fange unordered Liste an-->
+            <li>Kaffee</li>
+            <li>Schinken</li>
+            <li>Kaese</li>
+        </ul>
+        <ol> <!--fange ordered Liste an-->
+            <li>Kaffee</li>
+            <li>Schinken</li>
+            <li>K&auml;se</li>
+            <li>&Ouml;l</li>
+            <li>&Akg&uuml;l</li>
+            <li>Strasse</li>
+        </ol>
+        <ol type = "A"> <!--fange ordered Liste an-->
+            <li>Kaffee</li>
+            <li>Schinken</li>
+            <li>K&auml;se</li>
+            <li>&Ouml;l</li>
+            <li>&Akg&uuml;l</li>
+            <li>Strasse</li>
+        </ol>
+        <dl> <!-- description list-->
+            <dt>MeinItem</dt>
+            <dd>MeinItem_eingerückt </dd>
+        </dl>
+        <div class = "MeineListe">
+            <dl class="meine Liste">
+                <!--id müssen global einzigartig sein-->
+                <dt id = "MeinItem">MeinItem</dt>
+                <dd>MeinItem_eingerückt </dd>
+            </dl>
+        </div>
+        <hr>
+        <!-- iframes-->
+        <iframe src="http://127.0.0.1:5500/html_uben.html" sandbox="allow-forms allow-popups allow-pointer-lock allow-scripts"
+        srcdoc="<p>Ich bin ein Paragraph</p>">
+            <!--bei iframes so viel wie wenig erlauben wegen Sicherheit-->
+            <!-- macht man mit sandbox allow, also so wenig wie möglich allowen-->
+        </iframe>
+        <hr>
+        <form > 
+        <!-- in form action = code.js-->
+        <!-- in form method = post, um beim Passwortfeld -->
+        <!-- nicht alles kenntlich zu haben bei der Suchleiste-->
+            Vorname: <input type ="text" name="vorname">
+            <br>
+            Nachname: <input type="text" name="nachname">
+            Passwort: <input type="password" name="password">
+            <br>
+            <input type="radio" name="geschlecht" value="w"> Frau
+            <input type="radio" name="geschlecht" value="m"> Mann
+            <input type="radio" name="etwasAnderes" value="eA"> EA
+            <br>
+            <input type ="checkbox" name="CheckBox" value="CB">checkbox
+            <br>
+            <input type ="checkbox" name="CheckBox2" value="CB2">checkbox2
+            <br>
+            <input type ="checkbox" name="CheckBox3" value="CB3">checkbox3
+            <br>
+            <input type="button" onclick="alert('Hallo')" value="Klich mich Button">
+            <br>
+            <input type="color" name="farbe">
+            <br>
+            <input type="date" name="geburtstag">
+            <br>
+            <input type="datetime" name="Zeit"> <!--wird von den Browsern noch nicht unterstützt>-->
+            <br>
+            <input type="time" name="Time">
+            <br>
+            <input type="week" name="Woche">
+            <br>
+            <input type="month" name="Monat">
+            <br>
+            <input type="email" name="E-Mail">
+            <br>
+            <input type ="number" name=Zahl min="1" max="128">
+            <br>
+            <input type ="range" name=Zahl min="1" max="128">
+            <br>
+            <input type="search">
+            <!-- hier kann etwas gesucht werden-->
+            <br>
+            <input type="tel">
+            <!-- für Telefonnummer-->
+            <br>
+            <input type="url">
+            <!--, ob URL gültig ist -->
+            <br>
+            <input type="file" name="img">
+            <!-- nur eine Datei kann man öffnen-->
+            <br>
+            <input type="file" name="img2" multiple="on">
+            <!-- mehrere Dateien auswählbar-->
+            <br>
+            <input type="submit" value="Klich mich">
+            <br>
+
+        </form>
+
+        <form action="genetischer Code.html" target="blank">
+            Tab: <input type="text" name=weiter>
+            <input type="submit" value="öffne neuen Tab">
+            <br>
+        </form>
+        <form>
+            Vorname: <input type ="text" name="vorname" readonly="readonly">
+            <br>
+            Nachname: <input type="text" name="nachname" disabled="disabled">
+            <br>
+            Name: <input type ="text" name="name" size="100" maxlength="6">
+            <br>
+            Name2: <input type ="text" name="name" size="100">
+            <br>
+            <!-- mit autocomplete ="off" kann man Autokomplete deaktivieren-->
+            <!-- mit autofocus="on" bei bestimmter Stelle kann man in dem Textfeld 
+                sofort schreiben, aber nur einmal nutzbar-->
+            Name3: <input type="text" name="name" required ="on">
+            <!--man muss Name3 ausfüllen-->
+            <br>
+            <input type="submit" value="Klich mich">
+            <br>
+            </form>
+            <video width="640" controls="on" autoplay="off">
+                <!--<source src="naruto.mp4" type="video/mp4">-->
+            </video>
+            <track src="untertitel_en.vtt" kind="subtitles" srclang="en" label="Englisch">
+            <track src="untertitel_de.vtt" kind="subtitles" srclang="de" label="Deutsch">
+            <audio autplay = "" controls="">
+                <source src= "" type="audio/mp3">
+                <!-- hier Audiodatei eingeben-->
+                Keine Audiounterstützung
+            </audio>
+            <iframe width="480" height="320"
+            src="http://www.youtube.com/embed/pLzQc6OZHik?autplay=1" frameborder="0"></iframe>
+
+            <!--svg Grafiken kommen jetzt unten-->
+            <svg width="300" height="300">
+                <!--<circle cx="50" cy="50" r="40" stroke="red" stroke-width="6" fill="blue">
+                </circle>
+                <rect x = "50" y="25" ry="20" width="400" height="150" stroke="green" stroke-width="10">
+
+                </rect>-->
+                
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:rgb(0,255,255);" />
+                        <stop offset="100%" style="stop-color:rgb(255,0,0);" />  
+                    </linearGradient>
+                </defs>
+                <ellipse cx="150" cy="150" rx="60" ry="120" fill="url(#gradient)"/>
+            </svg>
+            <button type="button" id="click" onclick="fun2()" >umwandeln</button>
+        <script>
+            function fun2()
+            {
+                var txt = document.createTextNode(" This text was added to the DIV.");
+             var parent = document.getElementById('div');
+             parent.insertBefore(txt, parent.lastChild);
+            }</script>
+        </body>
+</html>
