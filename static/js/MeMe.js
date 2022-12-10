@@ -63,64 +63,92 @@ function read_sequences()
     return sequences;
    
 }
-
-function get_startverteilung(profile_matrix)
-{
-    var startverteilung = [];
-    for(let i = 0; i < profile_matrix.length; ++i)
-    {
-        startverteilung.push(parseFloat(profile_matrix[i][0]));
-    }
-    return startverteilung;
-
-}
 function sum(arr) {
     return arr.reduce(function (a, b) {
        return a + b;
     }, 0);
- }
+}
+
+class MeMe 
+{
+    constructor(profile_matrix, sequences)
+    {
+        this.profile_matrix = profile_matrix;
+        this.sequences = sequences;
+    }
+    
+    get_startverteilung()
+    {
+        var startverteilung = [];
+        for(let i = 0; i < this.profile_matrix.length; ++i)
+        {
+            startverteilung.push(parseFloat(this.profile_matrix[i][0]));
+        }
+        return startverteilung;
+
+    }
+
  
     
-function build_w_matrix(sequences, profile_matrix, motiv_length)
-{
-    let w_matrix = [];
-    for(let x = 0; x < sequences.length; ++x)
+    build_w_matrix(motiv_length)
     {
-        values = [];
-        for(let y = 0; y < (sequences[x].length - motiv_length + 1); ++y)
+        let w_matrix = [];
+        for(let x = 0; x <  this.sequences.length; ++x)
         {
-            motiv = 1;
-            for(let z = 0; z < motiv_length; ++z)
+            var values = [];
+            for(let y = 0; y < (this.sequences[x].length - motiv_length + 1); ++y)
             {
-                if(sequences[x][y + z] == 'A')
+                var motiv = 1;
+                for(let z = 0; z < motiv_length; ++z)
                 {
-                    motiv *= profile_matrix[0][z + 1];
+                    if(this.sequences[x][y + z] == 'A')
+                    {
+                        motiv *= this.profile_matrix[0][z + 1];
+                    }
+                    else if(this.sequences[x][y + z] == 'C')
+                    {
+                        motiv *= this.profile_matrix[1][z + 1]
+                    }
+                    else if(this.sequences[x][y + z] == 'G')
+                    {
+                        motiv *= this.profile_matrix[2][z + 1]
+                    }
+                    else if(this.sequences[x][y + z] == 'T')
+                    {
+                        motiv *= this.profile_matrix[3][z + 1]
+                    }
                 }
-                else if(sequences[x][y + z] == 'C')
-                {
-                    motiv *= profile_matrix[1][z + 1]
-                }
-                else if(sequences[x][y + z] == 'G')
-                {
-                    motiv *= profile_matrix[2][z + 1]
-                }
-                else if(sequences[x][y + z] == 'T')
-                {
-                    motiv *= profile_matrix[3][z + 1]
-                }
+                values.push(motiv);
             }
-            values.push(motiv);
+            var summe = sum(values);
+            
+            for(let i = 0; i < values.length; ++i)
+            {   
+                values[i] = values[i] / summe;
+            }
+            w_matrix.push(values);
         }
-        summe = sum(values);
-        
-        for(let i = 0; i < values.length; ++i)
-        {   
-            values[i] = values[i] / summe;
-        }
-        w_matrix.push(values);
+        return w_matrix;
     }
-    return w_matrix;
+
+    # die Anfangswerte aus der p-matrix werden in die neue matrix gespeichert
+    p_strich()
+    {
+        var p_strich_matrix = [];
+    }
+    
+    for x in range(1, len(p_matrix[0])):
+        zeile = []
+        for y in range(len(p_matrix)):
+            zeile.append(p_matrix[y][x])
+        p_strich_matrix.append(zeile)
+    return np.array(p_strich_matrix)
+
+
+
 }
+
+
 
 
         
@@ -134,8 +162,9 @@ function runMeMe()
     const motiv_length = profile_matrix[0].length - 1;
     const sequences = read_sequences();
 
-    const startverteilung = get_startverteilung(profile_matrix);
     
-    w_matrix = build_w_matrix(sequences, profile_matrix, motiv_length);
+    let meme = new MeMe(profile_matrix, sequences);
+    const startverteilung = meme.get_startverteilung();
+    w_matrix = meme.build_w_matrix(motiv_length);
     
 }
