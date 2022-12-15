@@ -4,7 +4,7 @@ document.getElementsByClassName('nav-link')[1].className = "nav-link active";
 document.getElementById('profile_file').addEventListener('change', function() {
 
 
-    var GetFile = new FileReader();
+    let GetFile = new FileReader();
   
      GetFile .onload=function(){
     document.getElementById('output_profile').value= GetFile.result;
@@ -19,7 +19,7 @@ document.getElementById('profile_file').addEventListener('change', function() {
   document.getElementById('sequences_file').addEventListener('change', function() {
 
 
-    var GetFile = new FileReader();
+    let GetFile = new FileReader();
   
      GetFile .onload=function(){
     
@@ -40,7 +40,7 @@ function read_profile()
     {
         return;
     }
-    var profile_matrix = profile.split("\n");
+    let profile_matrix = profile.split("\n");
     for(let i = 0; i < profile_matrix.length; ++i)
     {
         profile_matrix[i] = profile_matrix[i].split(" ");
@@ -59,7 +59,7 @@ function read_sequences()
     {
         return;
     }
-    var sequences = sequences_file.split("\n"); 
+    let sequences = sequences_file.split("\n"); 
     return sequences;
    
 }
@@ -68,6 +68,13 @@ function sum(arr) {
        return a + b;
     }, 0);
 }
+function transpose(arr) {
+    const transposed = [];
+    arr[0].forEach((col, i) => {
+      transposed.push(arr.map(row => row[i]));
+    });
+    return transposed;
+  }
 
 class MeMe 
 {
@@ -79,7 +86,7 @@ class MeMe
     
     get_startverteilung()
     {
-        var startverteilung = [];
+        let startverteilung = [];
         for(let i = 0; i < this.profile_matrix.length; ++i)
         {
             startverteilung.push(parseFloat(this.profile_matrix[i][0]));
@@ -95,10 +102,10 @@ class MeMe
         let w_matrix = [];
         for(let x = 0; x <  this.sequences.length; ++x)
         {
-            var values = [];
+            let values = [];
             for(let y = 0; y < (this.sequences[x].length - motiv_length + 1); ++y)
             {
-                var motiv = 1;
+                let motiv = 1;
                 for(let z = 0; z < motiv_length; ++z)
                 {
                     if(this.sequences[x][y + z] == 'A')
@@ -120,7 +127,7 @@ class MeMe
                 }
                 values.push(motiv);
             }
-            var summe = sum(values);
+            let summe = sum(values);
             
             for(let i = 0; i < values.length; ++i)
             {   
@@ -131,40 +138,116 @@ class MeMe
         return w_matrix;
     }
 
-    # die Anfangswerte aus der p-matrix werden in die neue matrix gespeichert
+    // die Anfangswerte aus der p-matrix werden in die neue matrix gespeichert
     p_strich()
     {
-        var p_strich_matrix = [];
+        let p_strich_matrix_start = [];
+        
+        for(let x = 1; x < this.profile_matrix[0].length; ++x)
+        {
+            let row = [];
+            for(let y = 0; y < this.profile_matrix.length; ++y)
+            {
+                row.push(parseFloat(this.profile_matrix[y][x]));
+            }
+            
+            p_strich_matrix_start.push(row);
+        }
+        
+        return p_strich_matrix_start;
     }
-    
-    for x in range(1, len(p_matrix[0])):
-        zeile = []
-        for y in range(len(p_matrix)):
-            zeile.append(p_matrix[y][x])
-        p_strich_matrix.append(zeile)
-    return np.array(p_strich_matrix)
-
-
-
+    // p-strich wird für jede sequenz berechnet
+    get_p_strich(motiv_length, w_matrix, p_strich)
+    {
+        let positions = this.sequences[0].length + 1 - motiv_length;
+        
+        let p_strich_matrix = [].concat(p_strich);
+        
+        for(let x = 0; x < motiv_length; ++x)
+        {
+            for(let y = 0; y < this.sequences.length; ++y)
+            {
+                for(let z = x; z < positions + x; ++z)
+                {
+                    if(this.sequences[y][z] == 'A')
+                    {
+                        p_strich_matrix[x][0] += w_matrix[y][z - x];
+                    }
+                    else if(this.sequences[y][z] == 'C')
+                    {
+                        p_strich_matrix[x][1] += w_matrix[y][z - x];
+                    }
+                    else if(this.sequences[y][z] == 'G')
+                    {
+                        p_strich_matrix[x][2] += w_matrix[y][z - x];
+                    }
+                    else if(this.sequences[y][z] == 'T')
+                    {
+                        p_strich_matrix[x][3] += w_matrix[y][z - x];
+                    }
+                }
+            }  
+        }
+        return p_strich_matrix;
+    }
+    // die neue p-matrix wird berechnet
+    get_new_p_matrix(p_strich_matrix, startverteilung)
+    {
+        let result = [];
+        for(let i = 0; i < p_strich_matrix.length; ++i)
+        {
+            let row = [];
+            let summe = sum(p_strich_matrix[i]);
+            for(let j = 0; j < p_strich_matrix[i].length; ++j)
+            {
+                row.push(p_strich_matrix[i][j] / summe)
+            }
+            result.push(row);
+        }
+        result = startverteilung + result;
+        console.log(result);
+        return transpose(result);
+    }
+    // summe = []
+    // for i in range(len(p_strich_matrix)):
+    //     summe.append(np.sum(p_strich_matrix[i]))
+    // result = []
+    // for x in range(len(p_strich_matrix)):
+    //     zeile = []
+    //     for y in range(len(p_strich_matrix[x])):
+    //         zeile.append(p_strich_matrix[x][y] / summe[x])
+    //     result.append(zeile)
+    // result = [startverteilung] + result
+    // return np.array(result).transpose()
+   
 }
 
 
 
 
-        
+
     
 
 
 
 function runMeMe()
 {
-    const profile_matrix = read_profile();
+    let profile_matrix = read_profile();
     const motiv_length = profile_matrix[0].length - 1;
     const sequences = read_sequences();
 
     
     let meme = new MeMe(profile_matrix, sequences);
     const startverteilung = meme.get_startverteilung();
-    w_matrix = meme.build_w_matrix(motiv_length);
+    const w_matrix = meme.build_w_matrix(motiv_length);
+    
+    document.getElementById("w_matrix").value = String(w_matrix).split(",").join(" ");
+    const p = meme.p_strich();
+    
+    const strich_p = meme.get_p_strich(motiv_length, w_matrix, p);
+   
+    profile_matrix = meme.get_new_p_matrix(strich_p, startverteilung);
+    console.log(profile_matrix);
+
     
 }

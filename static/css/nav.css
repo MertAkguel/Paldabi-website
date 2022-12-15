@@ -97,5 +97,17 @@ border: 1px solid;
 .files_upload
 {
   float: left;
-  width: 64%;
+  width: 35%;
+}
+
+#confirm-button_meme
+{
+  position: relative;
+  left: 30%;
+}
+
+.outputs
+{
+  float:left;
+  width: 35%;
 }
