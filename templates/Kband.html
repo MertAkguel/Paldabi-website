@@ -1,0 +1,55 @@
+<div class="bg-success p-2 text-dark bg-opacity-50" id="form">
+
+    <div class="row">
+      <div class="col">
+        <input type="text" class="form-control" id="horizontal" placeholder="sequence1" aria-label="sequence1"
+          value="CATGAT" required ="on">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" id="vertical" placeholder="sequence2" aria-label="sequence2" 
+        value="CAGCAT" required ="on">
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <input type="number" class="form-control" id="match" placeholder="Matchscore" aria-label="Matchscore" required ="on">
+      </div>
+      <div class="col">
+        <input type="number" class="form-control" id="mismatch" placeholder="Mismatchscore" aria-label="Mismatchscore" required ="on"
+        
+         >
+      </div>
+      <div class="col">
+        <input type="number" class="form-control" id="gap" placeholder="Gap" aria-label="Gap" required ="on"">
+      </div>
+      <div class="col">
+        <input type="number" class="form-control" id="kband" placeholder="kband" aria-label="kband" required ="on">
+      </div>
+    </div>
+
+    <br>
+    <div class="row">
+      <div class="col">
+        <button type="submit" class="btn btn-success d-grid gap-2 d-md-block" id="confirm-button"
+          onclick="getMatrix()">Bestätigen</button>
+      </div>
+    </div>
+</div>
+      <br>
+      <div id="matrix" class="left-column">
+      </div>
+  
+      <div>
+        <div id="score">
+   
+        </div>
+        <code id="alignment">
+      </code>
+      <div id="optimal">
+
+      </div>
+      </div>
+
+
+<script src="{{url_for('static', filename='js/Kband.js')}}"></script>

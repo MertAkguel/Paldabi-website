@@ -98,16 +98,6 @@ border: 1px solid;
 {
   float: left;
   width: 35%;
+  margin-left: 1%;
 }
 
-#confirm-button_meme
-{
-  position: relative;
-  left: 30%;
-}
-
-.outputs
-{
-  float:left;
-  width: 35%;
-}

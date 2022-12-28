@@ -3,24 +3,24 @@
   <div class="row">
     <div class="col">
       <input type="text" class="form-control" id="horizontal" placeholder="sequence1" aria-label="sequence1"
-        value="IMISSMISSISSIPPI">
+        value="IMISSMISSISSIPPI" required ="on">
     </div>
     <div class="col">
       <input type="text" class="form-control" id="vertical" placeholder="sequence2" aria-label="sequence2" 
-      value="MYMISSISAHIPPIE">
+      value="MYMISSISAHIPPIE" required ="on">
     </div>
   </div>
   <br>
   <div class="row">
     <div class="col">
-      <input type="number" class="form-control" id="match" placeholder="Matchscore" aria-label="Matchscore" value="3">
+      <input type="number" class="form-control" id="match" placeholder="Matchscore" aria-label="Matchscore" required ="on">
     </div>
     <div class="col">
-      <input type="number" class="form-control" id="mismatch" placeholder="Mismatchscore" aria-label="Mismatchscore"
-        value="-4">
+      <input type="number" class="form-control" id="mismatch" placeholder="Mismatchscore" aria-label="Mismatchscore" required ="on"
+        >
     </div>
     <div class="col">
-      <input type="number" class="form-control" id="gap" placeholder="Gap" aria-label="Gap" value="-6">
+      <input type="number" class="form-control" id="gap" placeholder="Gap" aria-label="Gap" required ="on">
     </div>
   </div>
   <br>
@@ -45,18 +45,5 @@
     </code>
     </div>
     
-  
-
-    
-
-
-
-
-
-
- 
-  
-  
-
 
 <script src="{{url_for('static', filename='js/Alignment.js')}}"></script>

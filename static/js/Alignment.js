@@ -156,7 +156,7 @@ function buildNW(traceback)
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match);
                     traceback[counter_v][counter_h] = 'D';
                 }
-                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) && parseInt(matrix[i-lenh-2+j].innerHTML) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
+                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap);
                     traceback[counter_v][counter_h] = 'V';
@@ -177,7 +177,7 @@ function buildNW(traceback)
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch);
                     traceback[counter_v][counter_h] = 'D';
                 }
-                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) && parseInt(matrix[i-lenh-2+j].innerHTML) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
+                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap);
                     traceback[counter_v][counter_h] = 'V';
@@ -234,6 +234,37 @@ function delete_matrix()
 
 function getMatrix()
 {
+    const match = document.getElementById('match').value;
+    const mismatch = document.getElementById('mismatch').value;
+    const gap = document.getElementById('gap').value;
+    const sequence1 = document.getElementById('horizontal').value;
+    const sequence2 = document.getElementById('vertical').value; 
+    if(match === "")
+    {
+        alert("You have to give a match value");
+        return;
+    }
+    else if(mismatch === "")
+    {
+        alert("You have to give a mismatch value");
+        return;
+    }
+    else if(gap === "")
+    {
+        alert("You have to give a gap value");
+        return;
+    }
+    else if(sequence1 === "")
+    {
+        alert("You have to give the first sequence");
+        return;
+    }
+    else if(sequence2 === "")
+    {
+        alert("You have to give the second sequence");
+        return;
+    }
+    
     
     buildMatrix();
     setMatrix();

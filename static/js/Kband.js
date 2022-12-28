@@ -89,7 +89,7 @@ function fillN(traceback)
         }
         traceback.push(temp);
     }
-    console.log("traceback = ", traceback)
+    // console.log("traceback = ", traceback);
     return traceback;
 }
 
@@ -99,7 +99,8 @@ function initializeNW(traceback)
     const matrix = document.getElementsByClassName('cell');
     const sequence1 = document.getElementById('horizontal').value;
     const sequence2 = document.getElementById('vertical').value; 
-    
+    const gapscore = document.getElementById('gap').value;
+    const k = parseInt(document.getElementById('kband').value);
     let counter_h = 1;
     let counter_v = 1;
     const lenh = sequence1.length + 1;
@@ -107,18 +108,18 @@ function initializeNW(traceback)
 
     matrix[lenh+2].innerHTML = 0;
     // Initialisierung
-    for (let i = lenh + 3; i < lenh * 2 + 2; i++)
+    for (let i = lenh + 3; i < lenh * 2 + 2 && i < lenh + 3 + k; i++)
     {
         
-        traceback[0][counter_h] = 'N';
-        matrix[i].innerHTML = 0;
+        traceback[0][counter_h] = 'H';
+        matrix[i].innerHTML = (counter_h) * parseInt(gapscore);
         counter_h++;
     }
-    for (let i = 2 * lenh + 3; i <= (lenh + 1) * (lenv + 1); i += lenh + 1)
+    for (let i = 2 * lenh + 3; i <= (lenh + 1) * (lenv + 1) && i < (2 * lenh + 3) + k * (lenh + 1); i += lenh + 1)
     {
         
-        traceback[counter_v][0] = 'N';
-        matrix[i].innerHTML = 0 ;
+        traceback[counter_v][0] = 'V';
+        matrix[i].innerHTML = (counter_v) * parseInt(gapscore);
         counter_v++;
     }
     traceback[0][0] = 'N';
@@ -130,110 +131,114 @@ function buildNW(traceback)
     const match = document.getElementById('match').value;
     const mismatch = document.getElementById('mismatch').value;
     const gap = document.getElementById('gap').value;
-    
+    const k = parseInt(document.getElementById('kband').value);
     let counter_h = 1;
     let counter_v = 1;
     //Recurrence:
     const matrix = document.getElementsByClassName('cell');
-
+    
     const lenh = horizontal.length;
     const lenv = vertikal.length;
     
     let start = (lenh+2) * 2 + 2;
     let end = (lenh + 2) * (lenv + 2);
     
-    for (let i = start; i < end; i += lenh + 2)
+    
+    let n = 0;
+    for (let i = start; i < end; i += lenh + 3)
     {
-        
-        for (let j = 0; j < lenh; ++j)
+        ++n;
+        for (let j = -k; j < k + 1; ++j)
         {
             
-            if (horizontal[counter_h - 1] === vertikal[counter_v - 1])
+            console.log(counter_h, counter_v, horizontal[counter_h + j - 1], vertikal[counter_v - 1], horizontal[counter_h + j - 1] == vertikal[counter_v - 1]);
+            console.log(i, j);
+            console.log(counter_h + j - 1);
+            let score = 0;
+            if (horizontal[counter_h + j - 1] == vertikal[counter_v - 1])
             {
-                
-                if (parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) > 0)
-                {
-                    
-                    matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match);
-                    traceback[counter_v][counter_h] = 'D';
-                }
-                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > 0)
-                {
-                    matrix[i+j].innerHTML = parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap);
-                    traceback[counter_v][counter_h] = 'V';
-                }
-                else if (parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(match) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > 0)
-                {
-                    matrix[i+j].innerHTML = parseInt(matrix[i-1+j].innerHTML) + parseInt(gap);
-                    traceback[counter_v][counter_h] = 'H';
-                }
-                else
-                {
-                    matrix[i+j].innerHTML = 0;
-                }
-               
+                score = parseInt(match);
             }
             else
             {
+                score = parseInt(mismatch);
+            }
+            if(j == 0)
+            {
+                console.log("if-fall");
+                if(k == 0)
+                {
+                    matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score);
+                    traceback[counter_v][counter_h + j] = 'D';
+                    continue;
+                }
                 
-                if (parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) > 0)
+                if (parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score) >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
                 {
                     
-                    matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch);
-                    traceback[counter_v][counter_h] = 'D';
+                    matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score);
+                    traceback[counter_v][counter_h + j] = 'D';
                 }
-                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > 0)
+                else if (parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score) && parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap);
-                    traceback[counter_v][counter_h] = 'V';
+                    traceback[counter_v][counter_h + j] = 'V';
                 }
-                else if (parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(mismatch) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > 0)
+                else if (parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score) && parseInt(matrix[i-1+j].innerHTML) + parseInt(gap) > parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap))
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-1+j].innerHTML) + parseInt(gap);
-                    traceback[counter_v][counter_h] = 'H';
+                    traceback[counter_v][counter_h + j] = 'H';
+                }
+            }
+            else if(j < 0 && counter_v > Math.abs(j))
+            {
+                console.log("elif-fall1");
+                if(parseInt(matrix[i-lenh-3+j].innerHTML) + score >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap))
+                {
+                    matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score);
+                    traceback[counter_v][counter_h + j] = 'D';
+                    
                 }
                 else
                 {
-                    matrix[i+j].innerHTML = 0;
+                    matrix[i+j].innerHTML = parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap);
+                    traceback[counter_v][counter_h + j] = 'V';
                 }
-               
+                
+                
             }
+            else if(j > 0 && counter_h - 1 + j < lenh)
+            {
+                console.log("elif-fall2");
+                if (parseInt(matrix[i-lenh-3+j].innerHTML) + score >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
+                {
+                    
+                    matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score);
+                    traceback[counter_v][counter_h + j] = 'D';
+                }
+                else
+                {
+                    
+                    matrix[i+j].innerHTML = parseInt(matrix[i-1+j].innerHTML) + parseInt(gap);
+                    traceback[counter_v][counter_h + j] = 'H';
+                }
+            }
+            // ++counter_h;
             
-            counter_h++;
         }
         counter_v++;
-        counter_h = 1;
+        ++counter_h;
+        
     }
     
 }
-var max_element_positions = [0, 0]; // horizontal, vertikal
-var max_position = 0;
 function getscore()
 {
-
     const score = document.getElementById('score');
     const cell = document.getElementsByClassName('cell');
-    const horizontal = document.getElementById('horizontal').value;
-    //const vertikal = document.getElementById('vertical').value;
-    var max_element = 0;
     
-    //const product = (horizontal.length + 2) * (vertikal.length + 2);
-    for(let i = 0; i < cell.length; ++i)
-    {
-        if(parseInt(cell[i].innerHTML) > max_element)
-        {
-            max_element = parseInt(cell[i].innerHTML);
-            max_element_positions[0] = parseInt(cell[i].innerHTML) % (horizontal.length + 2);
-            max_position = i;
-        }
-        max_element_positions[0] = max_position % (horizontal.length + 2) - 1;
-        max_element_positions[1] = parseInt(max_position / (horizontal.length + 2)) - 1;
-        
-    }
-    // console.log("horizontal", "vertikal")
-    // console.log(max_element_positions);
-    // console.log(max_position);
-    score.innerText = "Score: " + max_element;
+    
+    score.innerText = "Score: " + cell[cell.length - 1].innerHTML;
     
 
 }
@@ -246,6 +251,7 @@ function computeNW()
     
     initializeNW(traceback);
     buildNW(traceback);
+    console.log("traceback = ", traceback)
     getscore();
 }
 
@@ -294,39 +300,50 @@ function getMatrix()
         alert("You have to give the second sequence");
         return;
     }
+    else if(sequence1.length !== sequence2.length)
+    {
+        alert("Both sequences must have the same size");
+        return;
+    }
+    
     
     buildMatrix();
     setMatrix();
     computeNW();
     get_Alignment();
+    calculate_optimal_score();
     
 }
 
 
 function get_Alignment(a1="", a2="",gaps="")
 {
-    const cell = document.getElementsByClassName('cell');
-    var alignment = document.getElementById('alignment');
+    let cell = document.getElementsByClassName('cell');
+
+
+    let alignment = document.getElementById('alignment');
+    console.log(alignment.innerText);
 	if(alignment.innerText != "")
     {
         alignment.innerText = "";
     }
-	var horizontal = document.getElementById('horizontal').value;
+	let horizontal = document.getElementById('horizontal').value;
 	
-	var vertikal = document.getElementById('vertical').value;
+	let vertikal = document.getElementById('vertical').value;
 
-    var cell_number = max_position;
+    let cell_number = (horizontal.length + 2) * (vertikal.length + 2) - 1;
     cell[cell_number].style.backgroundColor = "#198754";
     cell[cell_number].style.fontSize = "1.1rem";
 
-	let tupel = [max_element_positions[1], max_element_positions[0]];
+	let tupel = [vertikal.length, horizontal.length];
 
-	while(traceback[tupel[0]][tupel[1]] != 'N')
+	while(tupel[0] != 0 || tupel[1] != 0)
 	{
         
 		if(traceback[tupel[0]][tupel[1]] === 'D')
 		{
             cell_number -= (horizontal.length + 3);
+            
 
 			a2 += horizontal[tupel[1]-1];
 			a1 += vertikal[tupel[0]-1];
@@ -352,7 +369,7 @@ function get_Alignment(a1="", a2="",gaps="")
 		}
 		else
 		{
-            cell_number -= (vertikal.length + 2);
+            cell_number -= (horizontal.length + 2);
 
 			a2 += "-";
 			a1 += vertikal[tupel[0]-1];
@@ -360,8 +377,6 @@ function get_Alignment(a1="", a2="",gaps="")
 
 			tupel[0] -= 1;
 		}
-        console.log(tupel);
-        // console.log("cell_number = ", cell_number)
         cell[cell_number].style.backgroundColor = "#198754";
         cell[cell_number].style.fontSize = "1.1rem";
     }
@@ -370,19 +385,50 @@ function get_Alignment(a1="", a2="",gaps="")
 	a2 = reverseString(a2);
 	gaps = reverseString(gaps);
 	
-
-    
-    wrap = document.getElementById('wrap');
     alignment.innerText += "\n";
     alignment.innerText += "Alignment \n";
 	alignment.innerText += a1 + "\n";
     
 	alignment.innerText += gaps + "\n";
     
-	alignment.innerText += a2 + "\n";
-    
-    alignment.style.pos
-    
-	
+	alignment.innerText += a2 + "\n";	
 }
 
+function calculate_optimal_score()
+{
+    
+    const sequence_length = document.getElementById('horizontal').value.length;
+    
+    const match = document.getElementById('match').value;
+    const gap = document.getElementById('gap').value;
+    const cell = document.getElementsByClassName('cell');
+    const score = cell[cell.length - 1].innerHTML;
+
+    const k = parseInt(document.getElementById('kband').value);
+    let optimal = document.getElementById("optimal");
+
+    if(optimal.innerText != "")
+    {
+        optimal.innerText = "";
+    }
+
+
+    optimal.innerText += "Das Alignment ist ";
+
+    if(parseInt(score) >= parseInt(match) * (parseInt(sequence_length) - parseInt(k) - 1) - 2*(parseInt(k) + 1) * parseInt(gap))
+    {
+        optimal.innerText += "optimal, da \n";
+        optimal.innerText += score + " >= " + match + " * (" + sequence_length + " - " + k + " - " + "1) - 2 * (" + k + " + 1) * " + gap;  
+    }
+    else
+    {
+        optimal.innerText += " nicht optimal, da \n";
+        optimal.innerText += score + " < " + match + " * (" + sequence_length + " - " + k + " - " + "1) - 2 * (" + k + " + 1) * " + gap;
+    }
+
+    
+
+
+
+
+}

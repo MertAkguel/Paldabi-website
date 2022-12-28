@@ -12,7 +12,7 @@ document.getElementById('profile_file').addEventListener('change', function() {
       
       GetFile.readAsText(this.files[0]);
       
-  })
+})
 
   
 
@@ -29,7 +29,7 @@ document.getElementById('profile_file').addEventListener('change', function() {
   }
       
       GetFile.readAsText(this.files[0]);
-  })
+})
 
 
 
@@ -38,6 +38,7 @@ function read_profile()
     const profile = document.getElementById('output_profile').value;
     if(profile === "")
     {
+        alert("You have to give us your profile of the bases");
         return;
     }
     let profile_matrix = profile.split("\n");
@@ -57,6 +58,7 @@ function read_sequences()
     const sequences_file = document.getElementById('output_sequences').value;
     if(sequences_file === "")
     {
+        alert("You have to give us your seqeunces");
         return;
     }
     let sequences = sequences_file.split("\n"); 
@@ -251,6 +253,11 @@ class MeMe
 function runMeMe()
 {
     const iterations = parseInt(document.getElementById("iterations").value);
+    if(iterations < 1)
+    {
+        alert("Iterations has to be one or higher");
+        return;
+    }
     let profile_matrix = read_profile();
     const motiv_length = profile_matrix[0].length - 1;
     const sequences = read_sequences();

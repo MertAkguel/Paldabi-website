@@ -1,0 +1,43 @@
+<div class="bg-success p-2 text-dark bg-opacity-50" id="form">
+
+    <div class="row">
+      <div class="col">
+        <input type="text" class="form-control" id="sequence" placeholder="sequence" aria-label="sequence"
+          value="AAHILNMY" required ="on"> 
+      </div>
+      <div class="col">
+        <input type="file" class="form-control" id="matrix" name="matrix"  required ="on">
+        Load your Scorematrix like Blosum62 or PAM120
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <input type="number" class="form-control" id="score" placeholder="score" aria-label="score" required ="on" value=3>
+      </div>
+      <div class="col">
+        <input type="number" class="form-control" id="threshold" placeholder="threshold" aria-label="threshold" required ="on"
+        value=14>
+      </div>
+      <div class="col">
+        <input type="number" class="form-control" id="thread" placeholder="thread" aria-label="thread" required ="on"
+        value=1>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <button type="submit" class="btn btn-success d-grid gap-2 d-md-block" id="confirm-button"
+          onclick="generateNeighborhoods();">Bestätigen</button>
+      </div>
+  
+    </div>
+  </div>
+
+
+
+
+
+
+
+<script src="{{url_for('static', filename='js/Blast.js')}}"></script>

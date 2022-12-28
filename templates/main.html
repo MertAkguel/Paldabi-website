@@ -46,9 +46,16 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/Needleman-Wunsch">Needleman-Wunsch</a></li>
               <li><a class="dropdown-item" href="/Smith-Waterman">Smith-Waterman</a></li>
+              <li><a class="dropdown-item" href="/Kband">Kband</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="/Blast" aria-expanded="false">
+              Blast
+            </a>
+            
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -90,6 +97,14 @@
 {% elif tag == "MeMe" %}
 
   {% include 'MeMe.html' %}
+
+{% elif tag == "Kband" %}
+
+  {% include 'Kband.html' %}
+
+{% elif tag == "Blast" %}
+
+  {% include 'Blast.html' %}
 
   {% endif %}
 
