@@ -97,7 +97,234 @@ border: 1px solid;
 .files_upload
 {
   float: left;
-  width: 35%;
+  width: 40%;
   margin-left: 1%;
 }
 
+.neighborhood_parent {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* optional, centers horizontally */
+  
+  width: 100vw; /* optional, fills the viewport width */
+}
+
+.neighborhood_child {
+  margin: auto;
+}
+
+
+.neighborhoods {
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+.neighborhoods__infix {
+  font-weight: bold;
+  color: #00b961;
+  margin-right: 1em;
+}
+
+.neighborhoods__neighbor {
+  display: flex;
+  align-items: center;
+  margin-right: 1em;
+}
+
+.neighborhoods__neighbor + .neighborhoods__neighbor:before {
+  content: "|";
+  margin: 0 1em;
+  color: #ccc;
+}
+
+.neighborhoods__neighbor:last-of-type {
+  margin-right: 0;
+}
+
+
+
+/* Use a modern typography style for the text */
+#score, #alignment, #optimal{
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Use modern layout techniques to create a structured and responsive layout */
+
+
+/* Use a modern color palette for the background colors */
+#alignment code {
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Use modern border and box shadow styles for the elements */
+#alignment code {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/* Use modern layout techniques to create responsive and flexible layouts */
+@media (max-width: 600px) {
+  #alignment {
+    flex-direction: column;
+  }
+}
+
+
+/* Use a modern typography style for the text */
+.rna {
+  font-size: 1.1rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Use a modern color palette for the background colors */
+.rna {
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Use modern border and box shadow styles for the elements */
+.rna {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/* Use modern layout techniques to create responsive and flexible layouts */
+@media (max-width: 600px) {
+  .rna {
+    flex-direction: column;
+  }
+}
+
+
+/* Use a green color palette for the elements */
+.files_upload,
+.outputs {
+  background-color: #288750;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Use modern layout techniques to create flexible layouts */
+.files_upload {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.files_upload > * {
+  flex: 0 0 40%;
+  margin: 5px;
+}
+
+.outputs {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
+}
+
+/* Use modern border and box shadow styles for the elements */
+.files_upload,
+.outputs {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/* Use modern typography styles for the text */
+.outputs textarea,
+.outputs label {
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+
+/* Style the submit button */
+button[type="submit"] {
+  background-color: #2ab664;
+  color: #333;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+button[type="submit"]:hover {
+  background-color: #00bfa5;
+}
+
+
+
+
+
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #00e676;
+}
+
+.navbar .navbar-brand {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.navbar .navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:focus {
+  color: #e0e0e0;
+}
+
+.navbar .navbar-nav .nav-link.active {
+  color: #e0e0e0;
+  background-color: #3f903f;
+}
+
+.navbar .navbar-nav .dropdown-menu {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.navbar .navbar-nav .dropdown-menu .dropdown-item {
+  color: #000000;
+}
+
+.navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
+.navbar .navbar-nav .dropdown-menu .dropdown-item:focus {
+  background-color: #e0e0e0;
+}
+
+.navbar .navbar-nav .dropdown-menu .dropdown-divider {
+  border-top-color: #e0e0e0;
+}
+
+#form {
+  background-color: rgba(76, 175, 80, 0.5);
+  border-radius: 10px;
+}
+
+input.form-control {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button.btn-success {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}

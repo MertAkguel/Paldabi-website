@@ -1,6 +1,15 @@
 document.getElementsByClassName('nav-link')[0].className = "nav-link";
 document.getElementsByClassName('nav-link')[4].className = "nav-link active";
 
+
+const element = document.getElementById("form");
+element.addEventListener("keypress", function(event) {
+	 if (event.key === "Enter") {
+        generateNeighborhoods();
+ 		event.preventDefault();
+     }
+});
+
 let matrix = "";
 document.getElementById('matrix').addEventListener('change', function() {
 
@@ -72,7 +81,7 @@ function generateNeighborhood(query, matrix, word_size, score_threshold, threads
         return;
     }
     let neighborhood = {"infix": new Array(query.length - word_size + 1),
-                        "neighborhood": new Array(query.length - word_size + 1)};
+                        "neighborhood": Array.from({ length: query.length - word_size + 1 }, () => [])};
     
     const alphabet = "ACDEFGHIKLMNPQRSTVWY";
     let max = 0;
@@ -109,20 +118,27 @@ function generateNeighborhood(query, matrix, word_size, score_threshold, threads
         for (let j = 0; j < Math.pow(20, word_size); ++j) 
         {
             let help = 0;
+            // let running_total  = 0;
+            // if (running_total + max * (word_size - help) < score_threshold) 
+            // {
+            //     break;
+            // }
 
             //Bildet den Score von der Permutation und dem Infix
             for (let n = Math.pow(20, (word_size - 1)); n >= 1; n /= 20) 
             {
-                temppair[1] += get_score(matrix, neighborhood["infix"][i][help], alphabet[(parseInt(j / n) % 20)]);
+                const score = get_score(matrix, neighborhood["infix"][i][help], alphabet[(parseInt(j / n) % 20)]);
+                temppair[1] += score;
                 temppair[0] += alphabet[(parseInt(j / n) % 20)];
-               
+                //running_total += score;
                 ++help;
             }
             
             //Prüft ob Treshold größer als errechneter Score ist
             if (temppair[1] >= score_threshold) 
             {
-                neighborhood["neighborhood"][i] = temppair;
+                let copy = Object.assign({}, temppair);
+                neighborhood["neighborhood"][i].push(copy);
                 
             }
             temppair[0] = "";
@@ -136,19 +152,26 @@ function generateNeighborhood(query, matrix, word_size, score_threshold, threads
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+function printNeighborhoods(neighborhoods) {
+    let output = document.getElementById("neighborhood");
+  
+    for (let x = 0; x < neighborhoods["infix"].length; ++x) {
+      let infix = neighborhoods["infix"][x].padStart(10);
+      let neighbors = neighborhoods["neighborhood"][x]
+        .map(
+          (neighbor) =>
+            `<span class="neighborhoods__neighbor">(${neighbor[0]}, ${neighbor[1]})</span>`
+        )
+        .join("");
+  
+      output.innerHTML += `
+        <div class="neighborhoods">
+          <span class="neighborhoods__infix">${infix}:</span>
+          ${neighbors}
+        </div>
+      `;
+    }
+  }
 
 
 
@@ -161,8 +184,26 @@ function generateNeighborhoods()
     const score_threshold = parseInt(document.getElementById('threshold').value);
     const threads = parseInt(document.getElementById('thread').value);
 
-    neighborhoods = generateNeighborhood(query, matrix, word_size, score_threshold, threads);
+    if (query.length === 0)
+    {
+        alert("Please enter a sequence");
+    }
+    else if (word_size === 0)
+    {
+        alert("Please enter a word_size");
+    }
+    else if (score_threshold === 0)
+    {
+        alert("Please enter a score_threshold");
+    }
+    else if (threads === 0)
+    {
+        alert("Please enter a thread number");
+    }
+
+    const neighborhoods = generateNeighborhood(query, matrix, word_size, score_threshold, threads);
     console.log(neighborhoods);
+    printNeighborhoods(neighborhoods);
 
     
 }

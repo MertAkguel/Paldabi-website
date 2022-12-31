@@ -6,18 +6,15 @@ document.getElementsByClassName('nav-link')[3].className = "nav-link active drop
 function reverseString(str) {
     return str.split("").reverse().join("");
 }
-// const element = document.getElementById("form");
-// element.addEventListener("keypress", function(event) {
-// 	 if (event.key === "Enter") {
-//         getMatrix();
-//  		event.preventDefault();
-//      }
-// });
-document.getElementById('form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    // When the data is submitted the grid mount function is called
-    getMatrix();
-  });
+
+const element = document.getElementById("form");
+element.addEventListener("keypress", function(event) {
+	 if (event.key === "Enter") {
+        getMatrix();
+ 		event.preventDefault();
+     }
+});
+
 
 function buildMatrix()
 {
@@ -204,9 +201,9 @@ function getscore()
     
     
     score.innerText = "Score: " + cell[cell.length - 1].innerHTML;
-    
 
 }
+
 function computeNW()
 {
     traceback = [];
@@ -290,7 +287,7 @@ function get_Alignment(a1="", a2="",gaps="")
 	var vertikal = document.getElementById('vertical').value;
 
     var cell_number = (horizontal.length + 2) * (vertikal.length + 2) - 1;
-    cell[cell_number].style.backgroundColor = "#198754";
+    cell[cell_number].style.backgroundColor = "#50C878";
     cell[cell_number].style.fontSize = "1.1rem";
 
 	let tupel = [vertikal.length, horizontal.length];
@@ -335,7 +332,7 @@ function get_Alignment(a1="", a2="",gaps="")
 
 			tupel[0] -= 1;
 		}
-        cell[cell_number].style.backgroundColor = "#198754";
+        cell[cell_number].style.backgroundColor = "#50C878";
         cell[cell_number].style.fontSize = "1.1rem";
     }
 

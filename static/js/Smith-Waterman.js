@@ -6,13 +6,13 @@ document.getElementsByClassName('nav-link')[3].className = "nav-link active drop
 function reverseString(str) {
     return str.split("").reverse().join("");
 }
-// const element = document.getElementById("form");
-// element.addEventListener("keypress", function(event) {
-// 	 if (event.key === "Enter") {
-//         getMatrix();
-//  		event.preventDefault();
-//      }
-// });
+const element = document.getElementById("form");
+element.addEventListener("keypress", function(event) {
+	 if (event.key === "Enter") {
+        getMatrix();
+ 		event.preventDefault();
+     }
+});
 document.getElementById('form').addEventListener('submit', function (event) {
     event.preventDefault();
     // When the data is submitted the grid mount function is called
@@ -316,12 +316,12 @@ function get_Alignment(a1="", a2="",gaps="")
 	var vertikal = document.getElementById('vertical').value;
 
     var cell_number = max_position;
-    cell[cell_number].style.backgroundColor = "#198754";
+    cell[cell_number].style.backgroundColor = "#50C878";
     cell[cell_number].style.fontSize = "1.1rem";
 
 	let tupel = [max_element_positions[1], max_element_positions[0]];
 
-	while(traceback[tupel[0]][tupel[1]] != 'N')
+	while(cell[cell_number].innerHTML != '0')
 	{
         
 		if(traceback[tupel[0]][tupel[1]] === 'D')
@@ -352,7 +352,7 @@ function get_Alignment(a1="", a2="",gaps="")
 		}
 		else
 		{
-            cell_number -= (vertikal.length + 2);
+            cell_number -= (horizontal.length + 2);
 
 			a2 += "-";
 			a1 += vertikal[tupel[0]-1];
@@ -362,7 +362,7 @@ function get_Alignment(a1="", a2="",gaps="")
 		}
         console.log(tupel);
         // console.log("cell_number = ", cell_number)
-        cell[cell_number].style.backgroundColor = "#198754";
+        cell[cell_number].style.backgroundColor = "#50C878";
         cell[cell_number].style.fontSize = "1.1rem";
     }
 

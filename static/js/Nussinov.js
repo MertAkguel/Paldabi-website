@@ -1,6 +1,14 @@
 document.getElementsByClassName('nav-link')[0].className = "nav-link";
 document.getElementsByClassName('nav-link')[2].className = "nav-link active";
 
+const element = document.getElementById("form");
+element.addEventListener("keypress", function(event) {
+	 if (event.key === "Enter") {
+        getMatrix();
+ 		event.preventDefault();
+     }
+});
+
 function buildMatrix()
 {
     
@@ -159,7 +167,7 @@ function traceback(cell_number, rna_structure)
         {
             rna_structure[parseInt(cell_number / (L + 1) - 1)] = ".";
             cell_number += L + 1;
-            cell[cell_number].style.backgroundColor = "#198754";
+            cell[cell_number].style.backgroundColor = "#50C878";
             cell[cell_number].style.fontSize = "1.1rem";
             
             
@@ -169,7 +177,7 @@ function traceback(cell_number, rna_structure)
         {
             rna_structure[cell_number % (L + 1) - 1] = ".";
             cell_number -= 1;
-            cell[cell_number].style.backgroundColor = "#198754";
+            cell[cell_number].style.backgroundColor = "#50C878";
             cell[cell_number].style.fontSize = "1.1rem";
             
             
@@ -182,7 +190,7 @@ function traceback(cell_number, rna_structure)
             rna_structure[parseInt(cell_number / (L + 1) - 1)] = "(";
             rna_structure[cell_number % (L + 1) - 1] = ")";
             cell_number += L;
-            cell[cell_number].style.backgroundColor = "#198754";
+            cell[cell_number].style.backgroundColor = "#50C878";
             cell[cell_number].style.fontSize = "1.1rem";
             
             
@@ -202,9 +210,9 @@ function traceback(cell_number, rna_structure)
                 if(parseInt(cell[cell_number].innerHTML) == parseInt(cell[p].innerHTML) + parseInt(cell[k].innerHTML))
                 {   
                     console.log("k = ", k);
-                    cell[p].style.backgroundColor = "#198754";
+                    cell[p].style.backgroundColor = "#50C878";
                     cell[p].style.fontSize = "1.1rem";
-                    cell[k].style.backgroundColor = "#198754";
+                    cell[k].style.backgroundColor = "#50C878";
                     cell[k].style.fontSize = "1.1rem";
                     
                     traceback(p, rna_structure);
@@ -216,7 +224,7 @@ function traceback(cell_number, rna_structure)
         }  
     }
     
-    cell[L * 2 + 1].style.backgroundColor = "#198754";
+    cell[L * 2 + 1].style.backgroundColor = "#50C878";
     cell[L * 2 + 1].style.fontSize = "1.1rem";
 }
 
@@ -247,6 +255,7 @@ function getMatrix()
     cell_number = L * 2 + 1;
     rna_structure = Array(L);
     traceback(cell_number, rna_structure);
+    rna.className = "rna";
     rna.innerHTML += "RNA-Struktur = ";
     console.log(rna_structure);
     for(let i = 0; i < rna_structure.length; ++i)

@@ -1,6 +1,8 @@
 document.getElementsByClassName('nav-link')[0].className = "nav-link";
 document.getElementsByClassName('nav-link')[1].className = "nav-link active";
 
+
+
 document.getElementById('profile_file').addEventListener('change', function() {
 
 
