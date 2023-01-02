@@ -89,7 +89,7 @@ function fillN(traceback)
         }
         traceback.push(temp);
     }
-    // console.log("traceback = ", traceback);
+    
     return traceback;
 }
 
@@ -151,9 +151,7 @@ function buildNW(traceback)
         for (let j = -k; j < k + 1; ++j)
         {
             
-            console.log(counter_h, counter_v, horizontal[counter_h + j - 1], vertikal[counter_v - 1], horizontal[counter_h + j - 1] == vertikal[counter_v - 1]);
-            console.log(i, j);
-            console.log(counter_h + j - 1);
+            
             let score = 0;
             if (horizontal[counter_h + j - 1] == vertikal[counter_v - 1])
             {
@@ -165,7 +163,7 @@ function buildNW(traceback)
             }
             if(j == 0)
             {
-                console.log("if-fall");
+                
                 if(k == 0)
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score);
@@ -192,7 +190,7 @@ function buildNW(traceback)
             }
             else if(j < 0 && counter_v > Math.abs(j))
             {
-                console.log("elif-fall1");
+                
                 if(parseInt(matrix[i-lenh-3+j].innerHTML) + score >= parseInt(matrix[i-lenh-2+j].innerHTML) + parseInt(gap))
                 {
                     matrix[i+j].innerHTML = parseInt(matrix[i-lenh-3+j].innerHTML) + parseInt(score);
@@ -209,7 +207,7 @@ function buildNW(traceback)
             }
             else if(j > 0 && counter_h - 1 + j < lenh)
             {
-                console.log("elif-fall2");
+                
                 if (parseInt(matrix[i-lenh-3+j].innerHTML) + score >= parseInt(matrix[i-1+j].innerHTML) + parseInt(gap))
                 {
                     
@@ -322,7 +320,7 @@ function get_Alignment(a1="", a2="",gaps="")
 
 
     let alignment = document.getElementById('alignment');
-    console.log(alignment.innerText);
+    
 	if(alignment.innerText != "")
     {
         alignment.innerText = "";

@@ -18,7 +18,7 @@ document.getElementById('matrix').addEventListener('change', function() {
   
     GetFile .onload=function(){
     matrix = GetFile.result;
-    //console.log(matrix);
+    
   }
       
       GetFile.readAsText(this.files[0]);
@@ -44,8 +44,6 @@ function get_score(matrix, valA, valB)
 {
     let valA_index = 0;
     let valB_index = 0;
-    // console.log(matrix);
-    // console.log(matrix[0].length);
     for(let i = 0; i < matrix[0].length; ++i)
     {
         if(matrix[0][i] == valA)
@@ -202,7 +200,7 @@ function generateNeighborhoods()
     }
 
     const neighborhoods = generateNeighborhood(query, matrix, word_size, score_threshold, threads);
-    console.log(neighborhoods);
+    
     printNeighborhoods(neighborhoods);
 
     

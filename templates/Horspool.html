@@ -1,0 +1,22 @@
+<form id="horspool_input" class="bg-success p-2 text-dark bg-opacity-50">
+    <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" id="text" placeholder="text" aria-label="text"
+            value="zzalalaala" required ="on">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="pattern" placeholder="pattern" aria-label="pattern" 
+          value="ala" required ="on">
+        </div>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-success d-grid gap-2 d-md-block" id="confirm-button-horspool"
+            onclick="getHorspool()">Submit</button>
+    </div>
+</form>
+
+
+
+
+
+<script src="{{url_for('static', filename='js/Horspool.js')}}"></script>

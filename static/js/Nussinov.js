@@ -102,13 +102,9 @@ function buildNussinov()
         let x = 0;
         for(let j = n; j < (cell.length - (L + 1) * (y + 1)); j += L + 2)
         {
-            // console.log("x = ", x);
-            // console.log("sequence[",x,"] = ", sequence[x]);
-            //console.log("j = ", j);
-            // console.log("n = ", n);
-            // console.log("L = ", L);
+            
             var case1 = parseInt(cell[j + L].innerHTML) + delta(sequence[x], sequence[x + 1 + y]);
-            //console.log("sequence[i] = ", sequence[x], "sequence[j] = ", sequence[x + 1 + y]);
+            
             var case2 = parseInt(cell[j + L + 1].innerHTML); 
             var case3 = parseInt(cell[j - 1].innerHTML);
             var case4 = 0;
@@ -118,12 +114,9 @@ function buildNussinov()
                 //max_element_positions[1] = parseInt(max_position / (horizontal.length + 2)) - 1;
                 // j - parseInt(j/(L + 1)) - y + 1
                 let p = j + (L + 1) * 2;
-                // console.log("y = ", y);
+                
                 for(let k = start + (L + 2)* x; k < j; ++k)
                 {
-                    // console.log("p = ", p);
-                    // console.log("k = ", k);
-                    
                     if(parseInt(cell[k].innerHTML) + parseInt(cell[p].innerHTML) > case4)
                     {
                         case4 = parseInt(cell[k].innerHTML) + parseInt(cell[p].innerHTML);
@@ -131,13 +124,9 @@ function buildNussinov()
                     p += (L + 1);
                 }
             }
-            //console.log(case1, case2, case3, case4);
             
             cell[j].innerHTML = Math.max(case1, case2, case3, case4);
-            
-            
             ++x;
-            
         }
         ++y;
     }
@@ -206,10 +195,10 @@ function traceback(cell_number, rna_structure)
             
             for(let k = start + (L + 2) * (x - 1); k < cell_number; ++k)
             {
-                console.log("k = ", k);
+                
                 if(parseInt(cell[cell_number].innerHTML) == parseInt(cell[p].innerHTML) + parseInt(cell[k].innerHTML))
                 {   
-                    console.log("k = ", k);
+                    
                     cell[p].style.backgroundColor = "#50C878";
                     cell[p].style.fontSize = "1.1rem";
                     cell[k].style.backgroundColor = "#50C878";
@@ -257,7 +246,7 @@ function getMatrix()
     traceback(cell_number, rna_structure);
     rna.className = "rna";
     rna.innerHTML += "RNA-Struktur = ";
-    console.log(rna_structure);
+    
     for(let i = 0; i < rna_structure.length; ++i)
     {
         rna.innerHTML += rna_structure[i];

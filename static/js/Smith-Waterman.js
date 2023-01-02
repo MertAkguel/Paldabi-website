@@ -89,7 +89,7 @@ function fillN(traceback)
         }
         traceback.push(temp);
     }
-    console.log("traceback = ", traceback)
+    
     return traceback;
 }
 
@@ -230,9 +230,7 @@ function getscore()
         max_element_positions[1] = parseInt(max_position / (horizontal.length + 2)) - 1;
         
     }
-    // console.log("horizontal", "vertikal")
-    // console.log(max_element_positions);
-    // console.log(max_position);
+    
     score.innerText = "Score: " + max_element;
     
 
@@ -360,8 +358,7 @@ function get_Alignment(a1="", a2="",gaps="")
 
 			tupel[0] -= 1;
 		}
-        console.log(tupel);
-        // console.log("cell_number = ", cell_number)
+       
         cell[cell_number].style.backgroundColor = "#50C878";
         cell[cell_number].style.fontSize = "1.1rem";
     }

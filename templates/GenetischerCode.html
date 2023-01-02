@@ -1,0 +1,19 @@
+
+<br>
+<form id="genetischer-code">
+    <label for="dna">Enter your DNA sequence:</label>
+    <input type="text" name="dnasequenz" id="dna" size="50" value="" required> 
+    
+  
+    <label for="rna">Your mRNA sequence:</label>
+    <input type="text" name="rnasequenz" id="rna" size="50" value="" readonly>
+  
+    <label for="AS">Your amino acid sequence:</label>
+    <input type="text" name="ASsequenz" id="AS" size="50" value="" readonly>
+    <button type="button" id="click2" onclick="GetGeneticCode()">Convert</button> 
+
+  </form>
+
+
+
+<script src="{{url_for('static', filename='js/GenetischerCode.js')}}"></script>

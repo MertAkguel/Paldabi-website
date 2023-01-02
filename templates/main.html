@@ -62,8 +62,8 @@
               Weiteres
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="Genetischer-Code">Genetischer-Code</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="/Genetischer-Code">Genetischer-Code</a></li>
+              <li><a class="dropdown-item" href="/Horspool">Horspool</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
@@ -105,6 +105,14 @@
 {% elif tag == "Blast" %}
 
   {% include 'Blast.html' %}
+
+{% elif tag == "Genetischer-Code" %}
+
+  {% include "GenetischerCode.html" %}
+
+{% elif tag == "Horspool" %}
+
+  {% include "Horspool.html" %}
 
   {% endif %}
 

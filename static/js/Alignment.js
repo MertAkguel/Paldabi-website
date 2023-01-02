@@ -86,7 +86,7 @@ function fillN(traceback)
         }
         traceback.push(temp);
     }
-    console.log("traceback = ", traceback)
+    
     return traceback;
 }
 
@@ -220,7 +220,7 @@ function delete_matrix()
 {
     let cell = document.getElementsByClassName('cell');
     let iteration_laenge = cell.length - 1;
-    var c = 0;
+    let c = 0;
     for(let i = iteration_laenge; i >= 0; i--)
     {
         c++;
@@ -273,20 +273,20 @@ function getMatrix()
 
 function get_Alignment(a1="", a2="",gaps="")
 {
-    var cell = document.getElementsByClassName('cell');
+    let cell = document.getElementsByClassName('cell');
 
 
-    var alignment = document.getElementById('alignment');
-    console.log(alignment.innerText);
+    let alignment = document.getElementById('alignment');
+    
 	if(alignment.innerText != "")
     {
         alignment.innerText = "";
     }
-	var horizontal = document.getElementById('horizontal').value;
+	let horizontal = document.getElementById('horizontal').value;
 	
-	var vertikal = document.getElementById('vertical').value;
+	let vertikal = document.getElementById('vertical').value;
 
-    var cell_number = (horizontal.length + 2) * (vertikal.length + 2) - 1;
+    let cell_number = (horizontal.length + 2) * (vertikal.length + 2) - 1;
     cell[cell_number].style.backgroundColor = "#50C878";
     cell[cell_number].style.fontSize = "1.1rem";
 

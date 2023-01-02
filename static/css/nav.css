@@ -328,3 +328,63 @@ button.btn-success {
   background-color: #4CAF50;
   border-color: #4CAF50;
 }
+
+
+
+#genetischer-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#genetischer-code input[type="text"] {
+  width: 80%;
+  height: 2em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 0.5em;
+  font-size: 1em;
+  outline: none;
+  margin: 0.5em 0;
+}
+
+#genetischer-code button[type="button"] {
+  width: 15%;
+  height: 2em;
+  border: none;
+  border-radius: 5px;
+  background-color: #0070ba;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  outline: none;
+  margin: 0.5em 0;
+}
+
+#dna, #rna, #AS
+{
+  text-align: center;
+}
+
+#confirm-button-horspool
+{
+  position: relative;
+  left: 47%;
+  background-color: #2ab664;
+  color: #333;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+
+
+#confirm-button-horspool:hover
+{
+  background-color: rgb(230, 230, 230);
+  color: black;
+}
