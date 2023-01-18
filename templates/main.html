@@ -55,8 +55,14 @@
             <a class="nav-link" href="/Blast" aria-expanded="false">
               Blast
             </a>
-            
           </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="/Gibbs" aria-expanded="false">
+              Gibbs
+            </a>
+          </li>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Weiteres
@@ -113,6 +119,10 @@
 {% elif tag == "Horspool" %}
 
   {% include "Horspool.html" %}
+
+{% elif tag == "Gibbs" %}
+
+  {% include "Gibbs.html" %}
 
   {% endif %}
 

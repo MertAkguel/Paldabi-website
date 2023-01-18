@@ -1,5 +1,5 @@
 document.getElementsByClassName('nav-link')[0].className = "nav-link";
-document.getElementsByClassName('nav-link')[5].className = "nav-link active";
+document.getElementsByClassName('nav-link')[6].className = "nav-link active";
 
 
 function setPattern(pattern)
@@ -20,7 +20,7 @@ function setPattern(pattern)
         temp_vec[j] -= (j + 1);
     }
 
-    for(let k = 0; k < temp_vec.length; ++k)
+    for(let k = 0; k < temp_vec.length - 1; ++k)
     {
         shift_table[pattern[k]] = temp_vec[k];
     }
@@ -37,54 +37,68 @@ function setPattern(pattern)
     return shift_table;
 }
 
-function alignCheck_(text_pos)
-{
-    align_tests = new Array();
-    align_tests.push(text_pos);
-    return align_tests;
-}
 
-function getHits(pattern, text)
+
+function getHits(pattern, text, shift_table)
 {
     let hits = new Array();
     if (text.length === 0)
     {
+        alert("You have to give us a text")
         return hits;
     }
 
-    let temps = new Array();
+    let shift_positions = new Array();
     let pos = 0;
 
-    const n = text.size();
-    const m = pattern.size();
+    const n = text.length;
+    const m = pattern.length;
 
 
     while (pos <= (n - m)) {
         let j = (m - 1);
-        alignCheck_(pos);
-        temps.push(pos);
+        
+        shift_positions.push(pos);
 
-        while (j > 0 &&
-               (text[pos + j] == this->getPattern()[j] || (this->getPattern()[j] == '?') || text[pos + j] == '?')) {
+        while (j > 0 && (text[pos + j] == pattern[j] || (pattern[j] == '?') || text[pos + j] == '?')) 
+        {
 
             j--;
         }
-        if (j == 0) {
+        if (j === 0) 
+        {
 
-            hits.push_back(pos);
+            hits.push(pos);
         }
 
-        pos += this->getShift_(text[pos + (m - 1)]);
-
+        pos += getShift(shift_table, text[pos + (m - 1)], pattern);
+        
 
     }
 
-    return hits;
+    return [hits, shift_positions];
 
 }
 
+function print_get_hits(hits_and_shift_positions)
+{
+    let horspool = document.getElementById('horspool');
+    
+    if(horspool.innerHTML != "")
+    {
+        horspool.innerHTML = "";
+    }
 
-
+    horspool.innerHTML += `<span class="output_title_horspool">Shifts: </span> `;
+    for(let x = 0;  x < hits_and_shift_positions[1].length; ++x) {
+    horspool.innerHTML += `<span class="shift">${hits_and_shift_positions[1][x]}</span> `;
+    }
+    horspool.innerHTML += "<br><br>";
+    horspool.innerHTML += `<span class="output_title_horspool">Occurrences: </span> `;
+    for(let y = 0;  y < hits_and_shift_positions[0].length; ++y) {
+    horspool.innerHTML += `<span class="occurrence">${hits_and_shift_positions[0][y]}</span> `;
+    }
+}
 
 
 function getHorspool()
@@ -93,10 +107,44 @@ function getHorspool()
     const text = document.getElementById('text').value;
    
     const shift_table = setPattern(pattern);
-   
+    const hits_and_shift_positions = getHits(pattern, text, shift_table);
+    print_get_hits(hits_and_shift_positions);
+
+  
+    
 }
 
+function getShift(shift_table, last_char, pattern)
+{
+    if(check_in_pattern(pattern, last_char))
+    {
+        
+        return shift_table[last_char];
+    }
+    else
+    {
 
+        if(check_in_pattern('?'))
+        {
+            return shift_table['?'];
+        }
+        return pattern.length;
+    }
+
+}
+
+function check_in_pattern(pattern, last_char)
+{
+    for (let idx = 0; idx < pattern.length; ++idx)
+    {
+        
+        if (last_char === pattern[idx]) 
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 
