@@ -417,3 +417,15 @@ button.btn-success {
   font-size: 17px;
   font-weight: bold;
 }
+
+.gibbs_outputs
+{
+  /* background-color: #288750; */
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
+}

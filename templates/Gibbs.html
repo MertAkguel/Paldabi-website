@@ -12,10 +12,28 @@
     <input type="number" id="motiv_len" name="motiv_len"  placeholder="motiv_len" aria-label="motiv_len"  required ="on" value="4">
 
     <input type="number" id="iterations" name="iterations"  placeholder="iterations" aria-label="iterations"  required ="on" value="1">
-   
+    
+    <input type="number" id="threshold" name="threshold"  placeholder="threshold" aria-label="threshold"  required ="on" value="0.5">
+    <br>
     <button type="submit"
         onclick="runGibbs()">Ermittle Bindungsmotiv</button>
+
+    <br>
+
+    
+    
+    <br>
+    <textarea id="bindungsmotiv" name="bindungsmotiv" rows="3" cols="40"></textarea>
+
 </div>
+
+<div class="gibbs_outputs" id="chart_parent">
+    
+    <div id="chart"></div>
+
+
+</div>
+
 
 
 
