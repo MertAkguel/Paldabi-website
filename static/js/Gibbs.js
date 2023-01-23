@@ -27,7 +27,8 @@ class Gibbs
         this.randomIndex = 0;
         this.countMatrix;
         this.profileMatrix;
-        this.startPositions = new Array(2,4,0,1);// = Array(sequences.length);
+        this.droppedStartPosition;
+        this.startPositions = [5,2,4,0,1];// = Array(sequences.length);
         this.baseToNumber = {"A": 0, "C": 1, "G": 2, "T": 3};
         this.distribution = new Array();
 
@@ -37,6 +38,7 @@ class Gibbs
     {
         this.randomIndex = 0;//Math.round(Math.random() * this.sequences.length);
         this.droppedSequence = this.sequences.splice(this.randomIndex, 1)[0];
+        this.droppedStartPosition = this.startPositions.splice(this.randomIndex, 1)[0];
         
        
     }
@@ -53,9 +55,8 @@ class Gibbs
     }
     createCountMatrix()
     {
-        
+        let randomI = this.randomIndex;
         this.countMatrix = Array.from({length: 4}, () => Array(parseInt(this.motiv_len)).fill(1)); // 4 because of DNA and 1 because of adding Pseodo-Counts
-        
         
         for(let x = 0; x < this.motiv_len; ++x)
         {
@@ -73,12 +74,8 @@ class Gibbs
                 
                 ++this.countMatrix[this.baseToNumber[this.sequences[y][this.startPositions[y] + x]]][x];
                 
-            }
-           
+            }  
         }
-
-        
-
     }
     createProfileMatrix()
     {
@@ -122,6 +119,20 @@ class Gibbs
         {
             this.distribution[k] /= sum;
         }
+    }
+    adjustStartPosition()
+    {
+        this.startPositions = [this.droppedStartPosition].concat(this.startPositions);
+        this.sequences = [this.droppedSequence].concat(this.sequences);
+        let max_index = 0;
+        for(let k = 1; k < this.distribution.length; ++k)
+        {
+            if(this.distribution[max_index] < this.distribution[k])
+            {
+                max_index = k;
+            }
+        }
+        this.startPositions[this.randomIndex] = max_index;
     }
 
     plot()
@@ -180,26 +191,35 @@ class Gibbs
 
         // Plot the chart
         Plotly.newPlot('chart', data, layout);
-        const chart = document.getElementById('chart');
-        chart.innerHTML = "<br> <p> </p>"
+    }
+    getMotiv()
+    {
+        const bindungsmotiv = document.getElementById('bindungsmotiv');
         
     }
 
     compute()
     {
-        this.selectAndDropSequence();
         this.determineStartPositions();
-        this.createCountMatrix();
-        this.createProfileMatrix();
-        this.getDistribution();
-        this.normalizeDistribution();
-        this.plot();
-
+        console.log("this.startpositions = ", this.startPositions);
+        console.log("this.sequences = ", this.sequences);
+        for(let i = 0; i < this.iterations; ++i)
+        {
+            this.selectAndDropSequence();
+            this.createCountMatrix();
+            this.createProfileMatrix();
+            this.getDistribution();
+            this.normalizeDistribution();
+            this.plot();
+            this.adjustStartPosition();
+        }
+        
+        console.log("this.sequences = ", this.sequences);
         console.log("this.droppedSequence = ", this.droppedSequence);
         console.log("this.startpositions = ", this.startPositions);
-        console.log(this.countMatrix);
-        console.log(this.profileMatrix);
-        console.log("this.distribution = ", this.distribution);
+        // console.log(this.countMatrix);
+        // console.log(this.profileMatrix);
+        // console.log("this.distribution = ", this.distribution);
 
     }
 }
