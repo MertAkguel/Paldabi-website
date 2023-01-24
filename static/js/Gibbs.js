@@ -22,13 +22,12 @@ class Gibbs
         this.sequences = sequences;
         this.motiv_len = motiv_len;
         this.iterations = iterations;
-        this.threshold = threshold;
         this.droppedSequence = "";
         this.randomIndex = 0;
         this.countMatrix;
         this.profileMatrix;
         this.droppedStartPosition;
-        this.startPositions = [5,2,4,0,1];// = Array(sequences.length);
+        this.startPositions = [];// = Array(sequences.length);
         this.baseToNumber = {"A": 0, "C": 1, "G": 2, "T": 3};
         this.distribution = new Array();
 
@@ -36,7 +35,7 @@ class Gibbs
 
     selectAndDropSequence()
     {
-        this.randomIndex = 0;//Math.round(Math.random() * this.sequences.length);
+        this.randomIndex = 1//Math.round(Math.random() * this.sequences.length);
         this.droppedSequence = this.sequences.splice(this.randomIndex, 1)[0];
         this.droppedStartPosition = this.startPositions.splice(this.randomIndex, 1)[0];
         
@@ -49,13 +48,13 @@ class Gibbs
         {
             
            
-            //this.startPositions.push(Math.round(Math.random() * (this.sequences[0].length - this.motiv_len + 1)));
+            this.startPositions.push(Math.round(Math.random() * (this.sequences[0].length - this.motiv_len)));
         }
         
     }
     createCountMatrix()
     {
-        let randomI = this.randomIndex;
+       
         this.countMatrix = Array.from({length: 4}, () => Array(parseInt(this.motiv_len)).fill(1)); // 4 because of DNA and 1 because of adding Pseodo-Counts
         
         for(let x = 0; x < this.motiv_len; ++x)
@@ -63,14 +62,7 @@ class Gibbs
             
             for(let y = 0; y < this.sequences.length; ++y)
             {
-                // console.log("x, y = ", x, y);
-                // console.log("this.sequences[y] = ", this.sequences[y]);
-                // console.log("[this.startPositions[x] + x] = ", [this.startPositions[x] + x]);
-                // console.log("this.startPositions = ", this.startPositions);
-                // console.log("this.startPositions[x] = ", this.startPositions[x]);
-                // console.log("this.sequences[y][this.startPositions[x] + x] = ", this.sequences[y][this.startPositions[x] + x]);
-                // console.log("baseToNumber[this.sequences[y][this.startPositions[x] + x]]] = ", baseToNumber[this.sequences[y][this.startPositions[x] + x]]);
-                // console.log("this.countMatrix = ", this.countMatrix);
+                
                 
                 ++this.countMatrix[this.baseToNumber[this.sequences[y][this.startPositions[y] + x]]][x];
                 
@@ -91,8 +83,6 @@ class Gibbs
             }
            
         }
-
-        
     }
     getDistribution()
     {
@@ -122,8 +112,10 @@ class Gibbs
     }
     adjustStartPosition()
     {
-        this.startPositions = [this.droppedStartPosition].concat(this.startPositions);
-        this.sequences = [this.droppedSequence].concat(this.sequences);
+        // this.startPositions = [this.droppedStartPosition].concat(this.startPositions);
+        this.startPositions.splice(this.randomIndex, 0, this.droppedStartPosition)
+        this.sequences.splice(this.randomIndex, 0, this.droppedSequence)
+        // this.sequences = [this.droppedSequence].concat(this.sequences);
         let max_index = 0;
         for(let k = 1; k < this.distribution.length; ++k)
         {
@@ -133,6 +125,7 @@ class Gibbs
             }
         }
         this.startPositions[this.randomIndex] = max_index;
+        
     }
 
     plot()
@@ -186,15 +179,31 @@ class Gibbs
             showlegend: false,
             paper_bgcolor: '#F0F0F0',
             plot_bgcolor: '#F0F0F0'
+            
         };
-        
+        this.distribution = [];
 
         // Plot the chart
         Plotly.newPlot('chart', data, layout);
+        
     }
     getMotiv()
     {
-        const bindungsmotiv = document.getElementById('bindungsmotiv');
+        const output = document.getElementById('output');
+        const textarea = document.createElement("textarea");
+        textarea.innerHTML = "Das Bindungsmotiv ist wahrscheinlich: ";
+        output.appendChild(textarea);
+        let bindungsmotiv = "";
+        for(let z = 0; z < this.motiv_len; ++z)
+        {
+            let temp = {"A": 0, "C": 0, "G": 0, "T": 0};
+            for(let x = 0; x < this.sequences.length; ++x)
+            {
+                ++temp[this.sequences[x][this.startPositions[x] + z]];      
+            }
+            bindungsmotiv += Object.keys(temp).reduce((a, b) => temp[a] > temp[b] ? a : b);
+        }
+        textarea.innerHTML += bindungsmotiv;
         
     }
 
@@ -213,13 +222,14 @@ class Gibbs
             this.plot();
             this.adjustStartPosition();
         }
-        
+       
+        this.getMotiv();
         console.log("this.sequences = ", this.sequences);
         console.log("this.droppedSequence = ", this.droppedSequence);
         console.log("this.startpositions = ", this.startPositions);
-        // console.log(this.countMatrix);
-        // console.log(this.profileMatrix);
-        // console.log("this.distribution = ", this.distribution);
+        console.log(this.countMatrix);
+        console.log(this.profileMatrix);
+        console.log("this.distribution = ", this.distribution);
 
     }
 }
@@ -241,9 +251,8 @@ function runGibbs()
     const sequences = document.getElementById('output_profile').value.split("\n");
     const iterations = document.getElementById('iterations').value;
     const motiv_len = document.getElementById('motiv_len').value;
-    const threshold = document.getElementById('threshold').value;
 
-    let gibbs = new Gibbs(sequences, motiv_len, iterations, threshold);
+    let gibbs = new Gibbs(sequences, motiv_len, iterations);
     gibbs.compute();
 
     
