@@ -35,11 +35,9 @@ class Gibbs
 
     selectAndDropSequence()
     {
-        this.randomIndex = 1//Math.round(Math.random() * this.sequences.length);
+        this.randomIndex = Math.round(Math.random() * (this.sequences.length - 1));
         this.droppedSequence = this.sequences.splice(this.randomIndex, 1)[0];
         this.droppedStartPosition = this.startPositions.splice(this.randomIndex, 1)[0];
-        
-       
     }
     determineStartPositions()
     {
@@ -210,41 +208,22 @@ class Gibbs
     compute()
     {
         this.determineStartPositions();
-        console.log("this.startpositions = ", this.startPositions);
-        console.log("this.sequences = ", this.sequences);
+        
         for(let i = 0; i < this.iterations; ++i)
         {
             this.selectAndDropSequence();
             this.createCountMatrix();
             this.createProfileMatrix();
             this.getDistribution();
+        
             this.normalizeDistribution();
             this.plot();
             this.adjustStartPosition();
+            
         }
-       
         this.getMotiv();
-        console.log("this.sequences = ", this.sequences);
-        console.log("this.droppedSequence = ", this.droppedSequence);
-        console.log("this.startpositions = ", this.startPositions);
-        console.log(this.countMatrix);
-        console.log(this.profileMatrix);
-        console.log("this.distribution = ", this.distribution);
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 function runGibbs()
 {
@@ -254,6 +233,4 @@ function runGibbs()
 
     let gibbs = new Gibbs(sequences, motiv_len, iterations);
     gibbs.compute();
-
-    
 }
