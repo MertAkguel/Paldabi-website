@@ -367,7 +367,7 @@ button.btn-success {
   text-align: center;
 }
 
-#confirm-button-horspool
+#confirm-button-horspool, #confirm-button-fm-index
 {
   position: relative;
   left: 47%;
@@ -384,7 +384,7 @@ button.btn-success {
 
 
 
-#confirm-button-horspool:hover
+#confirm-button-horspool:hover, #confirm-button-fm-index:hover
 {
   background-color: rgb(230, 230, 230);
   color: black;

@@ -260,6 +260,7 @@ function runMeMe()
         alert("Iterations has to be one or higher");
         return;
     }
+    
     let profile_matrix = read_profile();
     const motiv_length = profile_matrix[0].length - 1;
     const sequences = read_sequences();

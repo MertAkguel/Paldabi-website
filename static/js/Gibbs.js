@@ -231,6 +231,17 @@ function runGibbs()
     const iterations = document.getElementById('iterations').value;
     const motiv_len = document.getElementById('motiv_len').value;
 
+    if(iterations < 1)
+    {
+        alert("Iterations has to be one or higher");
+        return;
+    }
+    if(motiv_len < 1)
+    {
+        alert("motiv_len has to be one or higher");
+        return;
+    }
+
     let gibbs = new Gibbs(sequences, motiv_len, iterations);
     gibbs.compute();
 }

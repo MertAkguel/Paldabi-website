@@ -8,6 +8,7 @@ class FM_Index
         this.text = text;
         this.pattern = pattern;
         this.sa = new Array();
+        this.bwt = "";
     }
     comparator(x, y) {
         let i = 0;
@@ -29,19 +30,42 @@ class FM_Index
         for (let i = 0; i < suffixes.length; i++) {
             this.sa.push(suffixes[i].index);
         }
-        console.log(this.sa);
+       
+        
+    }
+    build_bwt()
+    {
+        this.constructSuffixArray();
+        
+        for(let i = 0; i< this.sa.length; ++i)
+        {
+           
+            if(this.sa[i] > 0)
+            {
+                this.bwt += this.text[this.sa[i] - 1];
+            }
+            else
+            {
+                this.bwt += "$";
+            }
+            if(i==15)
+            {
+                break;
+            }
+        }
+        
     }
 
-    build_CTabulate() {
-        let alphabet = [...new Set(this.text)].sort();
+    build_CTabulate(L) {
+        let alphabet = [...new Set(L)].sort();
 
         let n_alpha = {};
         alphabet.forEach(function(value, valueAgain, set) {
         n_alpha[value] = 0;
         });
-        for(let i = 0; i < this.text.length; ++i)
+        for(let i = 0; i < L.length; ++i)
         {
-            ++n_alpha[this.text[i]]
+            ++n_alpha[L[i]]
         }
         
 
@@ -60,23 +84,23 @@ class FM_Index
         
     }
 
-    build_OCCTabulate()
+    build_OCCTabulate(L)
     {
         
         let Occ = [];
         let counter = {};
         let temp = 0;
-        for(let x = 0; x < this.text.length; ++x)
+        for(let x = 0; x < L.length; ++x)
         {
-            if(this.text[x] in counter)
+            if(L[x] in counter)
             {
-                temp = (this.text.length[x], 1 + counter[this.text[x]]);
-                counter[this.text[x]] = 1 + counter[this.text[x]];
+                temp = (L.length[x], 1 + counter[L[x]]);
+                counter[L[x]] = 1 + counter[L[x]];
             }
             else
             {
-                temp = (this.text[x], 1);
-                counter[this.text[x]] = 1;
+                temp = (L[x], 1);
+                counter[L[x]] = 1;
             }
             Occ.push(temp)
         }
@@ -85,8 +109,8 @@ class FM_Index
 
     reverseTransform(L)
     {
-        let c = this.build_CTabulate();
-        let occ = this.build_OCCTabulate();
+        let c = this.build_CTabulate(L);
+        let occ = this.build_OCCTabulate(L);
         
         let i = 0;
         let j = L.length - 1;
@@ -100,14 +124,14 @@ class FM_Index
         return T;
     }
     
-    build_OccMatrix() {
-        let alphabet = Array.from(new Set(this.text)).sort();
+    build_OccMatrix(L) {
+        let alphabet = Array.from(new Set(L)).sort();
         let counter = {};
         let Occ = {};
         for (let i = 0; i < alphabet.length; i++) {
             let row = [];
-            for (let j = 0; j < this.text.length; j++) {
-                if (alphabet[i] === this.text[j]) {
+            for (let j = 0; j < L.length; j++) {
+                if (alphabet[i] === L[j]) {
     
                     if (alphabet[i] in counter) {
                         row.push(1 + counter[alphabet[i]]);
@@ -133,18 +157,23 @@ class FM_Index
 
     backwardSearch()
     {
-        let c_tabulate = this.build_CTabulate();
-        let occ = this.build_OccMatrix();
-
+        this.build_bwt();
+        let c_tabulate = this.build_CTabulate(this.bwt);
+        let occ = this.build_OccMatrix(this.bwt);
+        
+        
+        
         let i = this.pattern.length - 1;
         let a = 0;
-        let b = this.text.length - 1;
+        let b = this.bwt.length - 1;
 
         let output = [];
-
+        
         while(a <= b && i >= 0)
         {
+           
             let c = this.pattern[i];
+           
             if(a - 1 < 0)
             {
                 a = c_tabulate[c];
@@ -154,58 +183,79 @@ class FM_Index
                 a = c_tabulate[c] + occ[c][a - 1];
             }
             b = c_tabulate[c] + occ[c][b] - 1;
+            
+
             --i;
         }
+
         if(b < a)
         {
-            console.log("return not found");
-            return output;
+           
+            return output.length;
         }
-        else
-        {
-            console.log("found ", b - a + 1, "occurences");
-        }
+       
         for(let x = a; x < (b + 1); ++x)
         {
             output.push(x + 1);
         }
-        return output;
+        return output.length;
 
     }
-    locateMatches(i)
-    {
-        let j = i;
-        v = 0;
-
-        let marked = false;
-        while(!marked)
-        {
-            
-        }
-    }
-
 
 }
 
-const text = "ipssm$pissii";
-const pattern = "ssi";
 
-let fmIndex = new FM_Index(text, pattern);
-fmIndex.constructSuffixArray();
+function runFM_Index()
+{
+    const text = document.getElementById('text').value;
+    const pattern = document.getElementById('pattern').value;
 
-console.log(fmIndex.build_CTabulate());
-console.log(fmIndex.build_OCCTabulate());
-console.log(fmIndex.reverseTransform(text));
-console.log(fmIndex.build_OccMatrix());
-console.log(fmIndex.backwardSearch());
+    if (text.length === 0)
+    {
+        alert("You have to give us a text");
+        return;
+    }
+    if (pattern.length === 0)
+    {
+        alert("You have to give us a pattern");
+        return;
+    }
 
+    const output = document.getElementById('output');
 
+    fmIndex = new FM_Index(text, pattern);
+    
+    output.value = "There are " + fmIndex.backwardSearch() + " occurences";
+}
 
-// function runFM_Index()
-// {
-//     const text = "banana";
-//     const pattern = "ssi";
+function runReverse()
+{
+    const text = document.getElementById('text').value;
+    const pattern = document.getElementById('pattern').value;
+    const reverse = document.getElementById('reverse').value;
 
-//     fmIndex = new FM_Index(text, pattern);
-//     fmIndex.constructSuffixArray();
-// }
+    if (text.length === 0)
+    {
+        alert("You have to give us a text");
+        return;
+    }
+    if (pattern.length === 0)
+    {
+        alert("You have to give us a pattern");
+        return;
+    }
+    if (reverse.length === 0)
+    {
+        
+        alert("You have to give us a text which you want to reverse");
+        return;
+
+    }
+
+    const output_reverse = document.getElementById('output_reverse');
+
+    fmIndex = new FM_Index(text, pattern);
+    
+    output_reverse.value = fmIndex.reverseTransform(reverse);
+
+}
